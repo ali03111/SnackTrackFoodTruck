@@ -11,17 +11,42 @@ const ThemeButtonWithIcon = ({
   image,
   style,
   textStyle,
-  btnStyle,
   imageStyle,
+  isDisable,
+  isYellowTheme,
 }) => {
   return (
     <Touchable
       Opacity={0.7}
       onPress={onPress}
-      style={[styles.button, { justifyContent: 'center', ...style }]}
+      disabled={isDisable}
+      style={[
+        styles.button,
+        {
+          justifyContent: 'center',
+          backgroundColor: isYellowTheme
+            ? Colors.primaryColor
+            : Colors.backgroundTheme,
+          ...style,
+        },
+      ]}
     >
-      <Image source={image} style={[styles.iconStyle, { ...imageStyle }]} />
-      <Text style={[styles.text, { ...textStyle }]}>{title}</Text>
+      {image && (
+        <Image
+          source={image}
+          style={{
+            ...styles.image,
+            marginRight: image ? wp('1') : 0,
+            ...imageStyle,
+          }}
+          resizeMode="contain"
+        />
+      )}
+      <Text
+        style={[styles.text, { marginLeft: image ? wp('1') : 0, ...textStyle }]}
+      >
+        {title}
+      </Text>
     </Touchable>
   );
 };
@@ -30,27 +55,28 @@ export default ThemeButtonWithIcon;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.primaryColor,
     height: hp('6.5'),
+    // width: wp('40'),
     width: '100%',
     borderRadius: 10,
+    // marginVertical: 20,
     alignItems: 'center',
     flexDirection: 'row',
+    // paddingHorizontal: '22.5%',
     justifyContent: 'center',
   },
+  image: {
+    width: wp('8'),
+    height: hp('8'),
+    // marginBottom: 5,
+    resizeMode: 'contain',
+  },
   text: {
-    fontSize: hp('2'),
+    // fontSize: heightPercentageToDP('2'),
     color: Colors.white,
     textAlign: 'center',
-    // marginLeft: wp('3'),
-    fontWeight: 400,
-  },
-  linearGradient: {
-    borderRadius: 10,
-  },
-  iconStyle: {
-    width: wp('6'),
-    height: hp('3'),
-    marginRight: wp('3'),
+    fontSize: hp('2'),
+    // marginRight: wp('3'),
+    // fontFamily: FontFamily.regular,
   },
 });

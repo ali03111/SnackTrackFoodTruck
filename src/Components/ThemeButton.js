@@ -44,7 +44,7 @@ export default ThemeButton;
 const styles = StyleSheet.create({
   button: {
     height: hp('6.5'),
-    width: '100%',
+    // width: wp('100'),
     borderRadius: 10,
     alignItems: 'center',
     flexDirection: 'row',

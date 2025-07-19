@@ -53,4 +53,23 @@ export const styles = StyleSheet.create({
   cardTextSpacing: {
     marginVertical: hp('1'), // or whatever spacing you want between texts
   },
+  myOrderHeadingView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: wp('90'),
+    alignSelf: 'center',
+    marginVertical: hp('2'),
+  },
+  multiViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: wp('60'),
+    justifyContent: 'space-between',
+    marginLeft: wp('4'),
+  },
+  flatListView: {
+    paddingHorizontal: hp('2'),
+    marginVertical: hp('1'),
+  },
 });

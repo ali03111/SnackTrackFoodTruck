@@ -174,6 +174,19 @@ export { default as ratingStarRed } from './Icons/ratingStarRed.png';
 export { default as locationWithMobile } from './Icons/locationWithMobile.png';
 export { default as locationYellow } from './Icons/locationYellow.png';
 
+export { default as locationRed } from './Icons/locationRed.png';
+
+export { default as editWhite } from './Icons/editWhite.png';
+
+export { default as addIcon } from './Icons/addIcon.png';
+
+export { default as uploadImgRed } from './Icons/uploadImgRed.png';
+
+export { default as description } from './Icons/description.png';
+export { default as price } from './Icons/price.png';
+export { default as dietary } from './Icons/dietary.png';
+export { default as itemName } from './Icons/itemName.png';
+
 export { default as activeOrders } from './Icons/activeOrders.png';
 export { default as heartYellow } from './Icons/heartYellow.png';
 export { default as todayOrders } from './Icons/todayOrders.png';

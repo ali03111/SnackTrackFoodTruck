@@ -26,6 +26,7 @@ const Colors = {
   lightBlueTextColor: 'rgba(24, 119, 242, 1)',
   diableBtnCOlor: 'rgba(238, 238, 238, 1)',
   bgGray: 'rgba(245, 245, 245, 1)',
+  lightBlackColor: 'rgba(67, 67, 67, 1)',
 };
 
 /** FontSize **/

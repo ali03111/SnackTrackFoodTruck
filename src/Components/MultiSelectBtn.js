@@ -3,6 +3,7 @@ import ThemeButton from './ThemeButton';
 import { StyleSheet } from 'react-native';
 import { Colors } from '../Theme/Variables';
 import { hp, wp } from '../Hooks/useResponsive';
+import ThemeButtonWithIcon from './ThemeButtonWithIcon';
 
 export const MultiSelectBtn = ({
   items,
@@ -21,14 +22,14 @@ export const MultiSelectBtn = ({
   const handlePress = allergy => {};
 
   return items?.map((item, index) => (
-    <ThemeButton
+    <ThemeButtonWithIcon
       key={index}
       onPress={() => {
         onSelectVal(objId, item);
         // setDummy(pre => pre + 1);
       }}
       title={item?.name ?? item?.title ?? item}
-      btnStyle={{
+      style={{
         ...styles.btnMain(
           isMultipule
             ? Boolean(selectedAlter?.find(res => res?.id == item.id))
@@ -59,18 +60,18 @@ export const styles = StyleSheet.create({
   btnMain: (isSelected, selectedBgColor) => ({
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: Colors.textGray,
-    height: hp('4.5'),
+    borderColor: selectedBgColor ? Colors.lightBlackColor : Colors.textGray,
+    height: hp('4'),
     width: 'auto',
     paddingHorizontal: wp('4.7'),
     marginRight: wp('2'),
     marginBottom: hp('1'),
     backgroundColor: isSelected
-      ? selectedBgColor ?? Colors.textGray
-      : 'transparent',
+      ? selectedBgColor ?? Colors.lightBlackColor
+      : 'rgba(248, 248, 248, 1)',
   }),
   btnText: isSelected => ({
-    color: isSelected ? 'white' : '#525252',
+    color: isSelected ? 'white' : Colors.textGray,
     fontSize: hp('1.5'),
   }),
 });

@@ -8244,6 +8244,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-swipe-list-view@npm:^3.2.9":
+  version: 3.2.9
+  resolution: "react-native-swipe-list-view@npm:3.2.9"
+  peerDependencies:
+    prop-types: ">=15.5.0"
+    react: ">=0.14.8"
+    react-native: ">=0.23.1"
+  checksum: e6fa7f60bcdffdffe0567144e01f4e53b78eff2dfb7f5bad0f560336d039afc5b02603281b5ef0c8b0de86f1cd94c50f943676f25c3f42cc390bedb02df9536d
+  languageName: node
+  linkType: hard
+
 "react-native@npm:0.80.0":
   version: 0.80.0
   resolution: "react-native@npm:0.80.0"
@@ -8939,6 +8950,7 @@ __metadata:
     react-native-screens: ^4.11.1
     react-native-svg: ^15.12.0
     react-native-svg-charts: ^5.4.0
+    react-native-swipe-list-view: ^3.2.9
     react-redux: ^9.2.0
     react-test-renderer: 19.1.0
     redux: ^5.0.1

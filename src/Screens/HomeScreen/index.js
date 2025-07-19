@@ -1,5 +1,12 @@
-import { View, Text, ImageBackground, Image, ScrollView } from 'react-native';
-import React, { memo } from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import React, { memo, useCallback } from 'react';
 import {
   activeOrders,
   addCircleWhite,
@@ -29,6 +36,7 @@ import { Colors } from '../../Theme/Variables';
 import HomeLocationCardComp from '../../Components/HomeLocationCardComp';
 import { MultiView } from '../../Components/MultiView';
 import { MultiSelectBtn } from '../../Components/MultiSelectBtn';
+import RecentOrderComp from '../../Components/RecentOrderComp';
 
 const categoryItem = [
   {
@@ -52,14 +60,19 @@ const centerView = [
   {
     title: 'Recent orders',
     onPress: () => {},
+    id: 'recentOrder',
   },
   {
     title: `Running orders`,
     onPress: () => {},
+    id: 'runnningOrder',
   },
 ];
 
 const HomeScreen = () => {
+  const renderItem = useCallback(({ item, index }) => {
+    return <RecentOrderComp />;
+  }, []);
   return (
     <ImageBackground source={HomeBg} style={styles.ImgBg} resizeMode="contain">
       <HomeHeaderComp />
@@ -89,16 +102,7 @@ const HomeScreen = () => {
         </View>
         {/* <AddLocationComp />
         <AddMenuBtn /> */}
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: wp('90'),
-            alignSelf: 'center',
-            marginVertical: hp('2'),
-          }}
-        >
+        <View style={styles.myOrderHeadingView}>
           <TextComponent
             text={'My orders'}
             size={'1.7'}
@@ -106,16 +110,20 @@ const HomeScreen = () => {
           />
           <TextComponent text={'View all'} size={'1.7'} />
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: wp('60'),
-            justifyContent: 'space-between',
-          }}
-        >
+        <View style={styles.multiViewStyle}>
           <MultiSelectBtn items={centerView} />
         </View>
+        <View>
+          <FlatList
+            data={[1, 2, 3, 4, 5, 6]}
+            renderItem={renderItem}
+            horizontal // Enable horizontal scrolling
+            keyExtractor={item => item.toString()}
+            showsHorizontalScrollIndicator={false} // Hide horizontal scroll indicator
+            contentContainerStyle={styles.flatListView} // Padding around the list
+          />
+        </View>
+
         {/* <HomeLocationCardComp /> */}
         <View style={styles.cardContainer}>
           <View style={styles.cardBox}>
