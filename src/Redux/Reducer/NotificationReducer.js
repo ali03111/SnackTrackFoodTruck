@@ -1,16 +1,16 @@
 import {types} from '../types';
 
 const initial_state = {
-  onboarding: false,
+  isNotification: false,
 };
 const actionMap = {
-  [types.onBoardFinished]: (state, act) => ({
-    ...state.onboarding,
-    onboarding: true,
+  [types.isNotifyTrue]: (state, act) => ({
+    ...state.isNotification,
+    isNotification: true,
   }),
-  [types.restartOnboarding]: (state, act) => ({
-    ...state.onboarding,
-    onboarding: false,
+  [types.isNotifyFalse]: (state, act) => ({
+    ...state.isNotification,
+    isNotification: false,
   }),
 };
 export default function (state = initial_state, action) {

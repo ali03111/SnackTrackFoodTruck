@@ -9,6 +9,7 @@ import { persistor, store } from './src/Redux/Reducer';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import FlashMessage from 'react-native-flash-message';
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const SnackTrackTruck = () => {
         <PersistGate persistor={persistor} loading={null}>
           <App />
         </PersistGate>
+        <FlashMessage position="top" />
       </Provider>
     </QueryClientProvider>
   );

@@ -1,16 +1,16 @@
 import {types} from '../types';
 
 const initial_state = {
-  onboarding: false,
+  isContact: false,
 };
 const actionMap = {
-  [types.onBoardFinished]: (state, act) => ({
-    ...state.onboarding,
-    onboarding: true,
+  [types.isContactTrue]: (state, act) => ({
+    ...state.isContact,
+    isContact: true,
   }),
-  [types.restartOnboarding]: (state, act) => ({
-    ...state.onboarding,
-    onboarding: false,
+  [types.isContactFalse]: (state, act) => ({
+    ...state.isContact,
+    isContact: false,
   }),
 };
 export default function (state = initial_state, action) {

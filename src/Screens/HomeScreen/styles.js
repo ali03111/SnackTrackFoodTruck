@@ -5,8 +5,8 @@ import { Colors } from '../../Theme/Variables';
 export const styles = StyleSheet.create({
   ImgBg: {
     width: wp('100'),
-    height: hp('25'),
-    marginTop: hp('-1'),
+    height: hp('30'),
+    marginTop: hp('-2'),
     flexGrow: 1,
   },
   ratingEarningsContainer: {

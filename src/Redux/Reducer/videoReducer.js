@@ -1,16 +1,12 @@
 import {types} from '../types';
 
 const initial_state = {
-  onboarding: false,
+  isVideo: false,
 };
 const actionMap = {
-  [types.onBoardFinished]: (state, act) => ({
-    ...state.onboarding,
-    onboarding: true,
-  }),
-  [types.restartOnboarding]: (state, act) => ({
-    ...state.onboarding,
-    onboarding: false,
+  [types.isVideo]: (state, act) => ({
+    ...state.isVideo,
+    isVideo: act.payload,
   }),
 };
 export default function (state = initial_state, action) {

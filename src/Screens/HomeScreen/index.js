@@ -100,8 +100,8 @@ const HomeScreen = () => {
             <TextComponent text={'No earnings'} fade size={'1.5'} />
           </View>
         </View>
-        {/* <AddLocationComp />
-        <AddMenuBtn /> */}
+        <AddLocationComp />
+        <AddMenuBtn />
         <View style={styles.myOrderHeadingView}>
           <TextComponent
             text={'My orders'}

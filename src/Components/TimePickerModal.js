@@ -1,66 +1,45 @@
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
-import { boldDivider, clockRed, crossWhite, editPicBtn } from '../Assets';
+import { boldDivider, clockRed, crossWhite } from '../Assets';
 import { TextComponent } from '../Components/TextComponent';
 import ThemeButton from '../Components/ThemeButton';
-import { useCallback, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Touchable } from '../Components/Touchable';
 import { Colors } from '../Theme/Variables';
 import { hp, wp } from '../Hooks/useResponsive';
 import DatePicker from 'react-native-date-picker';
+import {
+  convertToCustomTimeFormat,
+  formatTimeBothFormats,
+  formatTimeTo24Hour,
+  getCustom12HourTime,
+} from '../Services/GlobalFunctions';
 
-const ageRange = Array.from({ length: 23 }, (_, i) => {
-  const age = 18 + i;
-  return { label: String(age), value: String(age) };
-});
+// Utility function to format time in HH:mm
+
 const currentDate = new Date();
+
 const TimePickerModal = ({
   activeTags,
   isModal,
   onPress,
-  heading,
-  onSelect,
+  afterSelectTime,
   onBackPress,
-  activeTitle,
-  allData,
 }) => {
   const [innerDataState, setInnerDateState] = useState({
-    profileImg: activeTags?.profileImg,
-    userAge: activeTags?.age,
-    userGender: activeTags?.userGender,
-    eventType: activeTags?.eventTypes,
-    associations: activeTags?.eventAssociations,
+    startTime: null,
+    endTime: null,
   });
 
-  const [modalState, setModalState] = useState(false);
+  const [modalState, setModalState] = useState(null);
 
-  const [firstName, setFirstName] = useState(activeTags?.firstName);
-
-  const [lastName, setLastName] = useState(activeTags?.lastName);
-
-  const [_, forceUpdate] = useState(); // Just to trigger updates
-
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
-
-  const { associations, eventType, profileImg, userAge, userGender } =
-    innerDataState;
+  const { endTime, startTime } = innerDataState;
 
   const updateState = data => setInnerDateState(prev => ({ ...prev, ...data }));
 
   const onChangeVal = (key, val) => {
     updateState({ [key]: val });
   };
-
-  const [firstHit, setFirstHit] = useState(false);
 
   return (
     <View style={styles.modalView}>
@@ -70,9 +49,7 @@ const TimePickerModal = ({
         animationOutTiming={100}
         avoidKeyboard
         animationType="fade"
-        onBackButtonPress={
-          firstHit && activeTags.length == 0 ? onPress : onBackPress
-        }
+        onBackButtonPress={onBackPress}
         style={styles.bottomModal}
       >
         <View style={styles.modalWrapper}>
@@ -83,9 +60,7 @@ const TimePickerModal = ({
                 resizeMode="contain"
                 style={styles.divider}
               />
-              <Touchable
-                onPress={() => (onPress ? onPress({}, false) : onBackPress())}
-              >
+              <Touchable onPress={onBackPress}>
                 <Image
                   source={crossWhite}
                   resizeMode="contain"
@@ -115,18 +90,21 @@ const TimePickerModal = ({
 
             <View style={styles.timeRow}>
               <TextComponent
-                text={'09:00 AM'}
+                text={startTime?.time12 || '--:--'}
                 styles={styles.timeBox}
                 size={'1.8'}
                 onPress={() => {
-                  setModalState(true);
+                  setModalState('startTime');
                 }}
               />
               <TextComponent text={'to'} />
               <TextComponent
-                text={'09:00 AM'}
+                text={endTime?.time12 || '--:--'}
                 styles={styles.timeBox}
                 size={'1.8'}
+                onPress={() => {
+                  setModalState('endTime');
+                }}
               />
             </View>
 
@@ -134,7 +112,8 @@ const TimePickerModal = ({
               title={'Continue'}
               btnStyle={styles.modalBtn}
               onPress={() => {
-                onPress({ ...innerDataState, firstName, lastName }, true);
+                afterSelectTime(isModal, startTime, endTime);
+                onBackPress();
               }}
               isYellowTheme
               textStyle={styles.btnText}
@@ -142,38 +121,19 @@ const TimePickerModal = ({
           </View>
         </View>
       </Modal>
+
       <DatePicker
         mode={'time'}
-        // mode={datePicker.modalType}
-        open={modalState}
+        open={Boolean(modalState != null)}
         date={currentDate}
-        // date={value ?? currentDate}
         is24hourSource="locale"
         locale="en"
-        // onCancel={() => toggleDate(null)}
+        onCancel={() => setModalState(null)}
         modal
         onConfirm={e => {
-          console.log(
-            'lksdbvlksbdlkvbsdlkbvlsdblvkbsdlvbsdkvsd',
-            e,
-            new Date(e.getTime() + 24 * 60 * 60 * 1000),
-            e.toDateString(),
-          );
-          // if (datePicker.stateName == 'perfEventList') {
-          //   datePicker.onChange();
-          //   onSelectValueInList(
-          //     datePicker?.index,
-          //     datePicker.modalType ?? 'date',
-          //     e,
-          //   );
-          //   toggleDate(null);
-          // } else {
-          // onChange(e);
-          // // onChange(new Date(e.getTime() + 24 * 60 * 60 * 1000));
-          // // datePicker.onChange(e);
-          // // onSelectValue(datePicker.stateName, e);
-          // toggleDate(null);
-          // }
+          const timeFormatted = formatTimeBothFormats(e); // 'HH:mm'
+          onChangeVal(modalState, timeFormatted);
+          setModalState(null);
         }}
       />
     </View>

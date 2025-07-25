@@ -30,17 +30,18 @@ function MainNavigator() {
             component={Screens.OnBoardScreen}
           />
         )}
+        <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
+
         <Stack.Screen
           name="MyLocationScreen"
           component={Screens.MyLocationScreen}
         />
-        <Stack.Screen name="AddMenuScreen" component={Screens.AddMenuScreen} />
-        <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
-
         <Stack.Screen
           name="AddLocationScreen"
           component={Screens.AddLocationScreen}
         />
+        <Stack.Screen name="AddMenuScreen" component={Screens.AddMenuScreen} />
+
         <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
         <Stack.Screen
           name="RegisterScreen"

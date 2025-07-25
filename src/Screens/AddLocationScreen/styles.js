@@ -1,9 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Colors } from '../../Theme/Variables';
 import { hp, wp } from '../../Hooks/useResponsive';
 
 export const styles = StyleSheet.create({
   scrollView: { flexGrow: 1, paddingBottom: hp('20'), marginTop: hp('1') },
+  inputStyle: {
+    // backgroundColor: 'red',
+    height: hp('5'),
+    fontSize: hp('1.5'),
+    // paddingTop: hp('1.5'),
+  },
   textTouchBtn: {
     height: hp('3'),
     // marginTop: hp('1.5'),
@@ -22,7 +28,7 @@ export const styles = StyleSheet.create({
     height: hp('10'),
     borderRadius: 10,
     borderColor: 'black',
-    paddingVertical: hp('0.8'),
+    paddingVertical: Platform.OS == 'ios' ? hp('0.8') : 0,
     paddingHorizontal: wp('2'),
     justifyContent: 'flex-start',
     alignItems: 'flex-start',

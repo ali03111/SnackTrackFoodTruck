@@ -1,4 +1,4 @@
-import {yupResolver} from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const passwordSchema = {
@@ -153,105 +153,39 @@ const currentDate = new Date();
 
 const nextDay = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000); // Adds 1 day in milliseconds
 
-const eventCreateSchema = yup.object().shape({
-  eventTitle: yup
+const addLocationSchema = yup.object().shape({
+  truckName: yup
     .string()
-    .required('Please enter the event title.')
+    .required('Please enter the truck name.')
     .max(50, 'Name must be less than 50 characters.'),
-  eventImg: yup.mixed().required('Event image is required'),
-  eventPrice: yup.mixed().required('Event price is required'),
-  eventStartDate: yup
-    .date()
-    .required('Event start date is required')
-    .default(currentDate),
-  eventStartTime: yup
-    .date()
-    .required('Event start time is required')
-    .default(currentDate),
-  eventEndDate: yup
-    .date()
-    .required('Event end date is required')
-    .test(
-      'is-after-start',
-      'End date must be after start date',
-      function (value) {
-        const {eventStartDate} = this.parent;
-        return !eventStartDate || !value || value >= eventStartDate;
-      },
+  specialNotes: yup.string(),
+  parkingAvailable: yup.number().default(0),
+  seatAvailable: yup.number().default(0),
+  operationDays: yup
+    .array()
+    .of(
+      yup.object().shape({
+        day: yup.string().required('Day is required'),
+        startTime: yup
+          .string()
+          .test(
+            'not-default',
+            'Start time is required',
+            val => val !== '--:--',
+          ),
+        endTime: yup
+          .string()
+          .test('not-default', 'End time is required', val => val !== '--:--'),
+      }),
     )
-    .default(nextDay),
-  eventEndTime: yup
-    .date()
-    .required('Event end time is required')
-    .test(
-      'is-after-start-time',
-      'End time must be after start time',
-      function (value) {
-        const {eventStartTime, eventStartDate, eventEndDate} = this.parent;
-
-        if (
-          eventStartDate &&
-          eventEndDate &&
-          eventStartDate.getTime() === eventEndDate.getTime()
-        ) {
-          if (eventStartTime && value) {
-            const startTime = parseTimeString(eventStartTime);
-            const endTime = parseTimeString(value);
-            return endTime > startTime;
-          }
-          return true;
-        }
-        return true; // No need to validate if dates are different
-      },
-    ),
-  // .default(currentDate),
-  eventLocation: yup.object().shape({
+    .min(1, 'At least one operating day is required'),
+  truckLocation: yup.object().shape({
     locationName: yup.string().required('Event location Name is required'),
     coords: yup.object().shape({
       latitude: yup.string().required('Please select locaiton'),
       longitude: yup.string().required('Please select locaiton'),
     }),
   }),
-
-  eventType: yup
-    .array()
-    .of(
-      yup.object().shape({
-        id: yup.string().required('Please select event type'),
-        name: yup.string().required('Please select event type'),
-      }),
-    )
-    .min(1, 'At least one event type is required'),
-
-  privateEvent: yup.boolean().required('Specify the event type'),
-  eventAssociation: yup.array().of(
-    yup.object().shape({
-      id: yup.string(),
-      name: yup.string(),
-    }),
-  ),
-  eventCircuit: yup
-    .array()
-    .of(
-      yup.object().shape({
-        id: yup.string(),
-        name: yup.string(),
-      }),
-    )
-    .min(1, 'At least one event circuit is required'),
-  evnetTour: yup.string().required('Specify the event tour'),
-  eventConfirm: yup.boolean().required('Event confirmation is required'),
-  eventSync: yup.boolean(),
-  perfEventList: yup.array(),
-  // .of(
-  //   yup.object().shape({
-  //     title: yup.string().required('Event title is required'),
-  //     date: yup.date().required('Event date is required'),
-  //     startTime: yup.string().required('Start time is required'),
-  //     endTime: yup.string().required('End time is required'),
-  //   }),
-  // )
-  // .min(1, 'At least one performance event is required'),
 });
 
 const Schemas = {
@@ -263,7 +197,7 @@ const Schemas = {
   username: yupResolver(addUsernameScheme),
   editProfile: yupResolver(editProfileScheme),
   demoKit: yupResolver(demoKitSchema),
-  eventCreate: yupResolver(eventCreateSchema),
+  addLocation: yupResolver(addLocationSchema),
 };
 
 export default Schemas;

@@ -6,7 +6,7 @@ import { styles } from './styles';
 import KeyBoardWrapper from '../../Components/KeyBoardWrapper';
 import { Controller } from 'react-hook-form';
 import useAddLocationScreen from './useAddLocationScreen';
-import { carPark, check, gpsImg, seatAvilabe } from '../../Assets';
+import { carPark, check, gpsImg, seatAvilabe, unCheck } from '../../Assets';
 import { Touchable } from '../../Components/Touchable';
 import { hp, wp } from '../../Hooks/useResponsive';
 import { Colors } from '../../Theme/Variables';
@@ -15,7 +15,15 @@ import ThemeButton from '../../Components/ThemeButton';
 import TimePickerModal from '../../Components/TimePickerModal';
 
 const AddLocationScreen = () => {
-  const { control, errors } = useAddLocationScreen();
+  const {
+    control,
+    errors,
+    fields,
+    timePickerState,
+    toggleDaySelected,
+    toggleTimePicker,
+    afterSelectTime,
+  } = useAddLocationScreen();
 
   const TitleInputView = ({
     title,
@@ -87,11 +95,11 @@ const AddLocationScreen = () => {
       >
         <TitleInputView
           title={'Write your truck name *'}
-          errorName={errors['eventTitle']}
+          errorName={errors['truckName']}
           innerLeftView={
             <Controller
               control={control}
-              name="eventTitle"
+              name="truckName"
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   style={styles.inputStyle}
@@ -107,11 +115,11 @@ const AddLocationScreen = () => {
         />
         <TitleInputView
           title={'Add Location *'}
-          errorName={errors['eventLocation']?.locationName}
+          errorName={errors['truckLocation']?.locationName}
           innerLeftView={
             <Controller
               control={control}
-              name="eventLocation"
+              name="truckLocation"
               render={({ field: { onChange, value } }) => (
                 <Touchable
                   style={styles.textTouchBtn}
@@ -143,11 +151,11 @@ const AddLocationScreen = () => {
         />
         <TitleInputView
           mainViewStyles={{ marginTop: hp('-1') }}
-          errorName={errors['eventLocation']?.locationName}
+          errorName={errors['parkingAvailable']}
           innerLeftView={
             <Controller
               control={control}
-              name="eventLocation"
+              name="parkingAvailable"
               render={({ field: { onChange, value } }) => (
                 <View style={styles.textTouchBtn}>
                   <Image
@@ -170,7 +178,7 @@ const AddLocationScreen = () => {
           innerExtraView={
             <Controller
               control={control}
-              name={`privateEvent`}
+              name={`parkingAvailable`}
               render={({ field: { onChange, value } }) => {
                 return (
                   <Switch
@@ -194,11 +202,11 @@ const AddLocationScreen = () => {
         />
         <TitleInputView
           mainViewStyles={{ marginTop: hp('-1') }}
-          errorName={errors['eventLocation']?.locationName}
+          errorName={errors['seatAvailable']}
           innerLeftView={
             <Controller
               control={control}
-              name="eventLocation"
+              name="seatAvailable"
               render={({ field: { onChange, value } }) => (
                 <View style={styles.textTouchBtn}>
                   <Image
@@ -221,7 +229,7 @@ const AddLocationScreen = () => {
           innerExtraView={
             <Controller
               control={control}
-              name={`privateEvent`}
+              name={`seatAvailable`}
               render={({ field: { onChange, value } }) => {
                 return (
                   <Switch
@@ -246,11 +254,11 @@ const AddLocationScreen = () => {
         <TitleInputView
           mainViewStyles={{ marginTop: hp('-1'), paddingBottom: hp('2') }}
           title={'Any special notes'}
-          errorName={errors['eventTitle']}
+          errorName={errors['specialNotes']}
           centerInnerView={
             <Controller
               control={control}
-              name="eventTitle"
+              name="specialNotes"
               render={({ field: { onChange, value } }) => (
                 <View style={styles.inputView}>
                   <TextInput
@@ -258,8 +266,9 @@ const AddLocationScreen = () => {
                       overflow: 'scroll',
                       alignSelf: 'flex-start',
                       color: 'black',
+                      fontSize: hp('1.5'),
                     }}
-                    placeholder="Enter truck name"
+                    placeholder="Enter special notes"
                     maxLength={50}
                     placeholderTextColor={'gray'}
                     value={value}
@@ -284,71 +293,81 @@ const AddLocationScreen = () => {
               marginBottom: hp('1'),
             }}
           />
-          {timeDateArry.map((res, index) => (
-            <TitleInputView
-              errorName={errors['eventLocation']?.locationName}
-              innerLeftView={
-                <Controller
-                  control={control}
-                  name="eventLocation"
-                  render={({ field: { onChange, value } }) => (
+          {fields.map((field, index) => {
+            const openTime = field.startTime;
+            const closeTime = field.endTime;
+            const isSelected = field.isSelected ?? true; // default to true for now
+
+            return (
+              <TitleInputView
+                key={field.id}
+                errorName={
+                  isSelected &&
+                  (errors.operationDays?.[index]?.startTime?.message ||
+                    errors.operationDays?.[index]?.endTime?.message)
+                }
+                innerLeftView={
+                  <Touchable
+                    onPress={() => toggleDaySelected(index)}
+                    style={{ ...styles.textTouchBtn, width: wp('58') }}
+                  >
+                    <Image
+                      source={isSelected ? check : unCheck}
+                      resizeMode="contain"
+                      style={{
+                        ...styles.leftViewImg,
+                        width: wp('5'),
+                      }}
+                    />
+                    <TextComponent
+                      text={field.day}
+                      styles={{
+                        ...styles.textStyle,
+                        width: wp('80'),
+                        marginLeft: wp('3'),
+                      }}
+                    />
+                  </Touchable>
+                }
+                innerExtraView={
+                  isSelected && (
                     <Touchable
-                      style={{ ...styles.textTouchBtn, width: wp('58') }}
+                      style={{
+                        ...styles.textTouchBtn,
+                        marginLeft: 'auto',
+                        width: 'auto',
+                      }}
+                      onPress={() => toggleTimePicker(index)}
                     >
-                      <Image
-                        source={check}
-                        resizeMode="contain"
-                        style={{ ...styles.leftViewImg, width: wp('5') }}
-                      />
                       <TextComponent
-                        text={res?.title}
-                        styles={{
-                          ...styles.textStyle,
-                          width: wp('80'),
-                          marginLeft: wp('3'),
-                        }}
+                        text={`${
+                          openTime?.time12 ? openTime?.time12 : openTime
+                        } to ${
+                          closeTime?.time12 ? closeTime?.time12 : closeTime
+                        }`}
+                        styles={{ ...styles.textStyle, textAlign: 'right' }}
                       />
                     </Touchable>
-                  )}
-                />
-              }
-              innerExtraView={
-                <Controller
-                  control={control}
-                  name={`privateEvent`}
-                  render={({ field: { onChange, value } }) => {
-                    return (
-                      <Touchable
-                        style={{
-                          ...styles.textTouchBtn,
-                          marginLeft: 'auto', // ✅ Push to the right
-                          width: 'auto',
-                        }}
-                        onPress={
-                          () => {}
-                          // toggleDate('eventStartTime', 'time', null, onChange)
-                        }
-                      >
-                        <TextComponent
-                          text={`${res?.openTime} to ${res?.closeTime}`}
-                          // text={getCustom12HourTime(value ?? currentDate)}
-                          styles={{ ...styles.textStyle, textAlign: 'right' }}
-                        />
-                      </Touchable>
-                    );
-                  }}
-                />
-              }
-            />
-          ))}
+                  )
+                }
+              />
+            );
+          })}
           <ThemeButton
             title={'Save'}
             btnStyle={styles.saveBtn}
             textStyle={{ fontSize: hp('1.5') }}
+            // onPress={handleSubmit(onSubmit)}
           />
         </View>
       </KeyBoardWrapper>
-      <TimePickerModal isModal={false} />
+      <TimePickerModal
+        isModal={Boolean(timePickerState != null)}
+        afterSelectTime={(i, startTime, endTime) =>
+          afterSelectTime(timePickerState, startTime, endTime)
+        }
+        onBackPress={() => toggleTimePicker(null)}
+      />
     </View>
   );
 };
