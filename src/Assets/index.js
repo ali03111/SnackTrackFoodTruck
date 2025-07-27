@@ -20,6 +20,9 @@ export { default as LoginBg } from './Images/loginBg.png';
 export { default as HomeBg } from './Images/homeBg.png';
 export { default as onboardBgImg } from './Images/onboardBgImg.png';
 
+export { default as veg_soup } from './Images/veg_soup.png';
+export { default as veg_soupBig } from './Images/veg_soupBig.png';
+
 //  Icons
 
 export { default as eye } from './Icons/eye.png';
@@ -83,6 +86,15 @@ export { default as plusWhite } from './Icons/plusWhite.png';
 export { default as cardSend } from './Icons/cardSend.png';
 export { default as cardReceive } from './Icons/cardReceive.png';
 export { default as arrowRight } from './Icons/arrowRight.png';
+
+export { default as profileYellow } from './Icons/profileYellow.png';
+export { default as changePassYellow } from './Icons/changePassYellow.png';
+export { default as aboutYellow } from './Icons/aboutYellow.png';
+export { default as notificationYellow } from './Icons/notificationYellow.png';
+export { default as privacyYellow } from './Icons/privacyYellow.png';
+export { default as termYellow } from './Icons/termYellow.png';
+export { default as helpYellow } from './Icons/helpYellow.png';
+export { default as supportYellow } from './Icons/supportYellow.png';
 
 export { default as appleBtn } from './Icons/appleBtn.png';
 export { default as googleBtn } from './Icons/googleBtn.png';
@@ -173,6 +185,10 @@ export { default as dollarRed } from './Icons/dollarRed.png';
 export { default as ratingStarRed } from './Icons/ratingStarRed.png';
 export { default as locationWithMobile } from './Icons/locationWithMobile.png';
 export { default as locationYellow } from './Icons/locationYellow.png';
+
+export { default as threeDotsIcon } from './Icons/threeDotsIcon.png';
+
+export { default as circleYellow } from './Icons/circleYellow.png';
 
 export { default as locationRed } from './Icons/locationRed.png';
 

@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import FlashMessage from 'react-native-flash-message';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,9 @@ const SnackTrackTruck = () => {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
-          <App />
+          <MenuProvider>
+            <App />
+          </MenuProvider>
         </PersistGate>
         <FlashMessage position="top" />
       </Provider>

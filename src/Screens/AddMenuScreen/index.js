@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Image } from 'react-native';
+import { View, Text, TextInput, Image, Platform, Alert } from 'react-native';
 import React, { memo } from 'react';
 import { HeaderComponent } from '../../Components/HeaderComponent';
 import useAddMenuScreen from './useAddMenuScreen';
@@ -19,6 +19,11 @@ import {
   uploadImgRed,
 } from '../../Assets';
 import BtnModalComponent from '../../Components/BtnModalComponent';
+import {
+  uploadFromCamera,
+  uploadFromGalary,
+} from '../../Services/GlobalFunctions';
+import { imageUrl } from '../../Utils/Urls';
 
 const AddMenuScreen = () => {
   const {
@@ -96,11 +101,11 @@ const AddMenuScreen = () => {
       <KeyBoardWrapper styles={{ paddingBottom: hp('10') }}>
         <TitleInputView
           title={'Item Name'}
-          //   errorName={errors['eventTitle']}
+          errorName={errors['menuName']}
           innerLeftView={
             <Controller
               control={control}
-              name="eventTitle"
+              name="menuName"
               render={({ field: { onChange, value } }) => (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
@@ -109,8 +114,11 @@ const AddMenuScreen = () => {
                     style={styles.inputIconStyle}
                   />
                   <TextInput
-                    style={styles.inputStyle}
-                    placeholder="Enter expense name"
+                    style={{
+                      ...styles.inputStyle,
+                      paddingTop: Platform.OS == 'ios' ? 0 : hp('1'),
+                    }}
+                    placeholder="Enter the dish or item name"
                     maxLength={50}
                     placeholderTextColor={'gray'}
                     value={value}
@@ -122,12 +130,12 @@ const AddMenuScreen = () => {
           }
         />
         <TitleInputView
-          title={'Starting period'}
-          //   errorName={errors['eventTitle']}
+          title={'Description'}
+          errorName={errors['description']}
           centerInnerView={
             <Controller
               control={control}
-              name="eventStartDate"
+              name="description"
               render={({ field: { onChange, value } }) => (
                 <View style={styles.desInputView}>
                   <Image
@@ -142,9 +150,9 @@ const AddMenuScreen = () => {
                   <TextInput
                     style={{
                       overflow: 'scroll',
-                      //   alignSelf: 'flex-start',
                       color: 'black',
                       fontSize: hp('1.5'),
+                      paddingVertical: hp('0'),
                     }}
                     placeholder="Enter item desription"
                     maxLength={50}
@@ -158,12 +166,12 @@ const AddMenuScreen = () => {
           }
         />
         <TitleInputView
-          title={'Price'}
-          //   errorName={errors['eventTitle']}
+          title={'price'}
+          errorName={errors['price']}
           innerLeftView={
             <Controller
               control={control}
-              name="eventTitle"
+              name="price"
               render={({ field: { onChange, value } }) => (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Image
@@ -172,7 +180,10 @@ const AddMenuScreen = () => {
                     style={styles.inputIconStyle}
                   />
                   <TextInput
-                    style={styles.inputStyle}
+                    style={{
+                      ...styles.inputStyle,
+                      paddingTop: Platform.OS == 'ios' ? 0 : hp('1'),
+                    }}
                     placeholder="Input the price for the item"
                     maxLength={50}
                     placeholderTextColor={'gray'}
@@ -190,27 +201,72 @@ const AddMenuScreen = () => {
           centerInnerView={
             <Controller
               control={control}
-              name="eventStartDate"
+              name="img"
               render={({ field: { onChange, value } }) => (
-                <View
-                  style={{
-                    ...styles.textTouchBtn,
-                    height: 'auto',
-                    paddingHorizontal: wp('10'),
-                  }}
-                  onPress={
-                    () => {}
-                    // toggleDate('eventStartDate', 'date', null, onChange)
-                  }
-                >
-                  <Touchable>
-                    <Image
-                      source={uploadImgRed}
-                      resizeMode="contain"
-                      style={styles.uploadImg}
+                <>
+                  <View
+                    style={{
+                      ...styles.textTouchBtn,
+                      height: 'auto',
+                      paddingHorizontal: wp('10'),
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Touchable
+                      onPress={async () => {
+                        Alert.alert(
+                          'Pick to choose image',
+                          '',
+                          [
+                            {
+                              text: 'Camera',
+                              onPress: async () => {
+                                const imgData = await uploadFromCamera();
+                                onChange(imgData);
+                              },
+                            },
+                            {
+                              text: 'Gallery', // Just a dismissal button
+                              onPress: async () => {
+                                const imgData = await uploadFromGalary();
+                                onChange(imgData);
+                              },
+                            },
+                          ],
+                          { cancelable: true, onDismiss: () => {} },
+                        );
+                      }}
+                    >
+                      <Image
+                        source={
+                          value?.uri
+                            ? {
+                                uri: value?.isEdit
+                                  ? imageUrl(value?.uri)
+                                  : value?.uri,
+                              }
+                            : uploadImgRed
+                        }
+                        // resizeMode="contain"
+                        style={{
+                          ...styles.uploadImg,
+                          ...(value?.uri
+                            ? {
+                                width: wp('92'),
+                                borderRadius: 10,
+                              }
+                            : {}),
+                        }}
+                      />
+                    </Touchable>
+                  </View>
+                  {errors['eventImg'] && (
+                    <TextComponent
+                      text={errors['eventImg'].message}
+                      styles={styles.errorText}
                     />
-                  </Touchable>
-                </View>
+                  )}
+                </>
               )}
             />
           }
@@ -218,12 +274,12 @@ const AddMenuScreen = () => {
 
         <TitleInputView
           title={'Dietary Information'}
-          errorName={errors['eventLocation']?.locationName}
+          errorName={errors['operationDays']}
           innerViewOuterStyle={{ height: 'auto' }}
           innerLeftView={
             <Controller
               control={control}
-              name="eventLocation"
+              name="operationDays"
               render={({
                 field: { onChange, value = [1, 2, 3, 4, 6, 7, 8, 9] },
               }) =>

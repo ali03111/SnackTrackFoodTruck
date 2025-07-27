@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { hp, wp } from '../../Hooks/useResponsive';
 import { Colors } from '../../Theme/Variables';
 
@@ -91,7 +91,11 @@ export const styles = StyleSheet.create({
     height: hp('3'),
     tintColor: 'black',
   },
-  inputStyle: { flex: 1, color: 'black', fontSize: hp('1.2') },
+  inputStyle: {
+    flex: 1,
+    color: 'black',
+    fontSize: hp('1.2'),
+  },
 
   textTouchBtn: {
     backgroundColor: 'white',

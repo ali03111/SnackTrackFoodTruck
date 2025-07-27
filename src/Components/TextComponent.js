@@ -16,6 +16,7 @@ export const TextComponent = ({
   isGreen,
   size,
   isDarkFade,
+  family,
 }) => {
   return (
     <Text
@@ -40,6 +41,7 @@ export const TextComponent = ({
           ? 'gray'
           : Colors.black,
         fontSize: hp(size ?? '2'),
+        fontWeight: family ?? '100',
         ...styles,
       }}
     >

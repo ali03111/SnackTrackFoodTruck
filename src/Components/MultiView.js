@@ -12,10 +12,14 @@ export const MultiView = ({
   titleStyles,
   leftStyles,
   rightStyles,
+  touchBtnViewStyles,
 }) => {
   const renderItem = ({ item }) => {
     return (
-      <Touchable style={styles.listView} onPress={item?.onPress}>
+      <Touchable
+        style={{ ...styles.listView, ...touchBtnViewStyles }}
+        onPress={item?.onPress}
+      >
         {/* {i > 0 && (
           <Image source={divider} resizeMode="contain" style={styles.divider} />
         )} */}
@@ -34,6 +38,7 @@ export const MultiView = ({
           textStyle={titleStyles}
           leftStyle={leftStyles}
           rightStyle={rightStyles}
+          subView={item?.subView}
         />
       </Touchable>
     );

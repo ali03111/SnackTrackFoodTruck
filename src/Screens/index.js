@@ -5,3 +5,7 @@ export { default as RegisterScreen } from './RegisterScreen';
 export { default as AddLocationScreen } from './AddLocationScreen';
 export { default as AddMenuScreen } from './AddMenuScreen';
 export { default as MyLocationScreen } from './MyLocationScreen';
+export { default as MyMenuScreen } from './MyMenuScreen';
+export { default as MenuDetailScreen } from './MenuDetailScreen';
+export { default as SettingScreen } from './SettingScreen';
+export { default as ChangePasswordScreen } from './ChangePasswordScreen';

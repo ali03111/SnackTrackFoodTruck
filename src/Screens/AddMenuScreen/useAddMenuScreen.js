@@ -23,7 +23,7 @@ const useAddMenuScreen = () => {
     unregister,
     watch,
     errors,
-  } = useFormHook(Schemas.logIn);
+  } = useFormHook(Schemas.addMenu);
 
   const onSubmit = data => {
     console.log('Form Data:', data);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Image, StyleSheet } from 'react-native';
+import { Text, Image, StyleSheet, View } from 'react-native';
 import { Colors, FontFamily, FontSize } from '../Theme/Variables';
 import { Touchable } from './Touchable';
 import { hp, isIos, wp } from '../Hooks/useResponsive';
@@ -19,6 +19,7 @@ const IconBtnView = ({
   rightIconColor,
   leftIconColor,
   rightChilderView,
+  subView,
 }) => {
   return (
     <Touchable
@@ -30,10 +31,14 @@ const IconBtnView = ({
         <Image
           source={leftIcon}
           style={{ ...styles.iconStyle, ...leftStyle }}
-          tintColor={leftIconColor ?? Colors.primaryColor}
+          resizeMode="contain"
+          // tintColor={leftIconColor ?? Colors.primaryColor}
         />
       ) : null}
-      <TextComponent text={title} styles={{ ...styles.text, ...textStyle }} />
+      <View style={{ marginLeft: wp('3') }}>
+        <TextComponent text={title} styles={{ ...styles.text, ...textStyle }} />
+        {subView && <TextComponent text={subView} size={'1.5'} fade />}
+      </View>
       {rightChilderView ??
         (rightText ? (
           <TextComponent
@@ -50,6 +55,7 @@ const IconBtnView = ({
             source={rightIcon}
             style={{ ...styles.arrowStyle, ...rightStyle }}
             tintColor={rightIconColor}
+            resizeMode="contain"
           />
         ))}
     </Touchable>
@@ -65,12 +71,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     overflow: 'hidden',
     alignSelf: 'center',
+    width: wp('100'),
   },
   text: {
     fontSize: FontSize.scale16,
     textAlign: 'left',
-    marginLeft: wp('3'),
-    flex: 1,
+    // marginLeft: wp('3'),
+    // flex: 1,
   },
   linearGradient: {
     borderRadius: 10,
@@ -87,7 +94,6 @@ const styles = StyleSheet.create({
     flex: 0.06,
     width: wp('2'),
     height: hp('2'),
-    resizeMode: 'contain',
     // backgroundColor: 'red',
     paddingRight: wp('3'),
   },

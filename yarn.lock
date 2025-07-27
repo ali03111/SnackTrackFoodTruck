@@ -9115,6 +9115,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-popup-menu@npm:^0.18.0":
+  version: 0.18.0
+  resolution: "react-native-popup-menu@npm:0.18.0"
+  checksum: 5b7888fb61d045e8954f58871ff8aa0a99393c095a7d4e22709a7943ade8ca0405c8e519345aa856ddcc0eb0a961b33291ccaac6ebcef5e19a25157ba62e3b36
+  languageName: node
+  linkType: hard
+
 "react-native-responsive-screen@npm:^1.4.2":
   version: 1.4.2
   resolution: "react-native-responsive-screen@npm:1.4.2"
@@ -9898,6 +9905,7 @@ __metadata:
     react-native-linear-gradient: ^2.8.3
     react-native-modal: ^14.0.0-rc.1
     react-native-permissions: ^5.4.2
+    react-native-popup-menu: ^0.18.0
     react-native-responsive-screen: ^1.4.2
     react-native-safe-area-context: ^5.5.0
     react-native-screens: ^4.11.1

@@ -187,6 +187,19 @@ const addLocationSchema = yup.object().shape({
     }),
   }),
 });
+const addMenuchema = yup.object().shape({
+  menuName: yup
+    .string()
+    .required('Please enter the truck name.')
+    .max(50, 'Name must be less than 50 characters.'),
+  description: yup.string(),
+  price: yup.string(),
+  img: yup.mixed().required('Event image is required'),
+  operationDays: yup
+    .array()
+    .of(yup.object())
+    .min(1, 'At least one operating day is required'),
+});
 
 const Schemas = {
   signUp: yupResolver(signUpschema),
@@ -198,6 +211,7 @@ const Schemas = {
   editProfile: yupResolver(editProfileScheme),
   demoKit: yupResolver(demoKitSchema),
   addLocation: yupResolver(addLocationSchema),
+  addMenu: yupResolver(addMenuchema),
 };
 
 export default Schemas;
