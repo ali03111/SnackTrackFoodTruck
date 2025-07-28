@@ -71,7 +71,21 @@ const centerView = [
 
 const HomeScreen = () => {
   const renderItem = useCallback(({ item, index }) => {
-    return <RecentOrderComp />;
+    return (
+      <RecentOrderComp
+        orderId="#12345-6789-0"
+        time="03:15 pm"
+        items={[
+          { quantity: 3, name: 'Grilled Cheese Sandwiches' },
+          { quantity: 2, name: 'Bubble Tea' },
+          { quantity: 1, name: 'Sushi Burritos' },
+          { quantity: 4, name: 'Extra Nachos' },
+        ]}
+        onCancel={() => console.log('Cancel clicked')}
+        onCook={() => console.log('Cook clicked')}
+        orderStatus={'orderpending'}
+      />
+    );
   }, []);
   return (
     <ImageBackground source={HomeBg} style={styles.ImgBg} resizeMode="contain">

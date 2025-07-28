@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NavigationService from '../Services/NavigationService';
 import * as Screens from '../Screens/index';
 import useReduxStore from '../Hooks/UseReduxStore';
+import MybottomTabs from './bottomNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,10 @@ function MainNavigator() {
             component={Screens.OnBoardScreen}
           />
         )}
+        <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
+        <Stack.Screen name="OrderScreen" component={Screens.OrderScreen} />
+        <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
+
         <Stack.Screen
           name="ChangePasswordScreen"
           component={Screens.ChangePasswordScreen}
@@ -46,7 +51,6 @@ function MainNavigator() {
           name="MyLocationScreen"
           component={Screens.MyLocationScreen}
         />
-        <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
 
         <Stack.Screen
           name="AddLocationScreen"

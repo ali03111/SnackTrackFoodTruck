@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import React, { memo } from 'react';
 import { HeaderComponent } from '../../Components/HeaderComponent';
 import { styles } from './styles';
@@ -75,39 +75,44 @@ const SettingScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <HeaderComponent headerTitle={'Setting'} />
-      <View style={styles.upperWhiteView}>
-        <TextComponent text={Account.title} styles={styles.headingText} />
-        <MultiView
-          data={Account.arryView}
-          viewStyle={styles.viewStyle}
-          touchBtnViewStyles={styles.touchBtnViewStyles}
-          dividerStyles={styles.dividerStyles}
-          leftStyles={styles.leftIconStyle}
-          itemViewStyle={styles.itemViewStyle}
-        />
-      </View>
-      <View style={styles.upperWhiteView}>
-        <TextComponent text={Preferences.title} styles={styles.headingText} />
-        <MultiView
-          data={Preferences.arryView}
-          viewStyle={styles.viewStyle}
-          touchBtnViewStyles={styles.touchBtnViewStyles}
-          dividerStyles={styles.dividerStyles}
-          leftStyles={styles.leftIconStyle}
-          itemViewStyle={styles.itemViewStyle}
-        />
-      </View>
-      <View style={styles.upperWhiteView}>
-        <TextComponent text={Support.title} styles={styles.headingText} />
-        <MultiView
-          data={Support.arryView}
-          viewStyle={styles.viewStyle}
-          touchBtnViewStyles={styles.touchBtnViewStyles}
-          dividerStyles={styles.dividerStyles}
-          leftStyles={styles.leftIconStyle}
-          itemViewStyle={styles.itemViewStyle}
-        />
-      </View>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: hp('5') }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.upperWhiteView}>
+          <TextComponent text={Account.title} styles={styles.headingText} />
+          <MultiView
+            data={Account.arryView}
+            viewStyle={styles.viewStyle}
+            touchBtnViewStyles={styles.touchBtnViewStyles}
+            dividerStyles={styles.dividerStyles}
+            leftStyles={styles.leftIconStyle}
+            itemViewStyle={styles.itemViewStyle}
+          />
+        </View>
+        <View style={styles.upperWhiteView}>
+          <TextComponent text={Preferences.title} styles={styles.headingText} />
+          <MultiView
+            data={Preferences.arryView}
+            viewStyle={styles.viewStyle}
+            touchBtnViewStyles={styles.touchBtnViewStyles}
+            dividerStyles={styles.dividerStyles}
+            leftStyles={styles.leftIconStyle}
+            itemViewStyle={styles.itemViewStyle}
+          />
+        </View>
+        <View style={styles.upperWhiteView}>
+          <TextComponent text={Support.title} styles={styles.headingText} />
+          <MultiView
+            data={Support.arryView}
+            viewStyle={styles.viewStyle}
+            touchBtnViewStyles={styles.touchBtnViewStyles}
+            dividerStyles={styles.dividerStyles}
+            leftStyles={styles.leftIconStyle}
+            itemViewStyle={styles.itemViewStyle}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };

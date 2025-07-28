@@ -38,16 +38,26 @@ if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
   use_frameworks! :linkage => linkage.to_sym
 end
-
+# $RNFirebaseAsStaticFramework = true
 target 'snacktrackfoodtruck' do
   config = use_native_modules!
 
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
+
+    :hermes_enabled => false,
+    # :flipper_configuration => flipper_config,
+
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseAuth', :modular_headers => true
+  pod 'FirebaseAuthInterop', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+  pod 'RecaptchaInterop', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
     # pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   permissions_path = '../node_modules/react-native-permissions/ios'
 

@@ -96,6 +96,9 @@ export { default as termYellow } from './Icons/termYellow.png';
 export { default as helpYellow } from './Icons/helpYellow.png';
 export { default as supportYellow } from './Icons/supportYellow.png';
 
+export { default as menu } from './Icons/menu.png';
+export { default as order } from './Icons/order.png';
+
 export { default as appleBtn } from './Icons/appleBtn.png';
 export { default as googleBtn } from './Icons/googleBtn.png';
 

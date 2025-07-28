@@ -13,10 +13,15 @@ const ThemeButton = ({
   textStyle,
   btnStyle,
   disabled,
+  isLinear = true,
 }) => {
   return (
     <LinearGradient
-      colors={['rgba(255, 212, 74, 1)', 'rgba(231, 182, 0, 1)']}
+      colors={
+        isLinear
+          ? ['rgba(255, 212, 74, 1)', 'rgba(231, 182, 0, 1)']
+          : ['transparent', 'transparent']
+      }
       style={{ ...styles.linearGradient, ...btnStyle }}
     >
       <Touchable

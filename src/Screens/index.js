@@ -9,3 +9,4 @@ export { default as MyMenuScreen } from './MyMenuScreen';
 export { default as MenuDetailScreen } from './MenuDetailScreen';
 export { default as SettingScreen } from './SettingScreen';
 export { default as ChangePasswordScreen } from './ChangePasswordScreen';
+export { default as OrderScreen } from './OrderScreen';

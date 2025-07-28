@@ -31,6 +31,11 @@ const ThemeButtonWithIcon = ({
         },
       ]}
     >
+      <Text
+        style={[styles.text, { marginLeft: image ? wp('1') : 0, ...textStyle }]}
+      >
+        {title}
+      </Text>
       {image && (
         <Image
           source={image}
@@ -42,11 +47,6 @@ const ThemeButtonWithIcon = ({
           resizeMode="contain"
         />
       )}
-      <Text
-        style={[styles.text, { marginLeft: image ? wp('1') : 0, ...textStyle }]}
-      >
-        {title}
-      </Text>
     </Touchable>
   );
 };
@@ -55,7 +55,7 @@ export default ThemeButtonWithIcon;
 
 const styles = StyleSheet.create({
   button: {
-    height: hp('6.5'),
+    height: hp('5'),
     // width: wp('40'),
     width: '100%',
     borderRadius: 10,
@@ -66,16 +66,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: wp('8'),
-    height: hp('8'),
+    width: wp('5'),
+    height: hp('5'),
     // marginBottom: 5,
     resizeMode: 'contain',
+    marginLeft: wp('2'),
   },
   text: {
     // fontSize: heightPercentageToDP('2'),
     color: Colors.white,
     textAlign: 'center',
-    fontSize: hp('2'),
+    fontSize: hp('1.8'),
     // marginRight: wp('3'),
     // fontFamily: FontFamily.regular,
   },
