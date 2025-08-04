@@ -31,11 +31,7 @@ const MyLocationScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <HeaderComponent
-        headerTitle={'MY LOCATIONS'}
-        rightIconImg={addIcon}
-        isBack
-      />
+      <HeaderComponent headerTitle={'MY LOCATIONS'} rightIconImg={addIcon} />
       <SwipeListView
         showsVerticalScrollIndicator={false}
         style={styles.upComingFlatlistView}

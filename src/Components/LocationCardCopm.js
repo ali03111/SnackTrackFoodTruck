@@ -164,9 +164,11 @@ const styles = StyleSheet.create({
   multiViewIcon: {
     width: wp('4'),
     height: hp('3'),
+    marginLeft: wp('5'),
   },
   multiViewContainer: {
     width: wp('88'),
+    // backgroundColor: 'red',
   },
   multiViewTitle: {
     fontSize: hp('1.5'),

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { hp, wp } from '../../Hooks/useResponsive';
 import { Colors } from '../../Theme/Variables';
 
@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   ImgBg: {
     width: wp('100'),
     height: hp('30'),
-    marginTop: hp('-2'),
+    marginTop: Platform.OS == 'ios' ? hp('-4') : hp('-2'),
     flexGrow: 1,
   },
   ratingEarningsContainer: {

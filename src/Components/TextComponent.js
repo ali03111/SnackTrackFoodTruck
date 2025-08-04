@@ -26,7 +26,7 @@ export const TextComponent = ({
       suppressHighlighting={true} // This is specifically for iOS but might help
       style={{
         color: fade
-          ? Colors.grayFaded
+          ? Colors.textGray
           : isWhite
           ? Colors.white
           : isThemeColor

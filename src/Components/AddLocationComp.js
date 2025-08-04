@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     width: wp('90'),
     alignSelf: 'center',
     borderRadius: 10,
-    backgroundColor: Colors.lightYellowBgColor,
+    backgroundColor: 'rgba(255, 245, 210, 1)',
     paddingVertical: hp('5'),
     justifyContent: 'center',
     alignItems: 'center',

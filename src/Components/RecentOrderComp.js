@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp('1'),
     paddingHorizontal: wp('6'),
     borderRadius: 10,
-    width: wp('40'),
+    width: wp('35'),
     alignItems: 'center',
   },
   cookBtn: {
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp('1'),
     paddingHorizontal: wp('8'),
     borderRadius: 10,
-    width: wp('40'),
+    width: wp('35'),
     alignItems: 'center',
   },
   cancelText: {

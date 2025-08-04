@@ -76,7 +76,10 @@ const SettingScreen = () => {
     <View style={{ flex: 1 }}>
       <HeaderComponent headerTitle={'Setting'} />
       <ScrollView
-        contentContainerStyle={{ paddingBottom: hp('5') }}
+        contentContainerStyle={{
+          paddingBottom: hp('5'),
+          backgroundColor: 'white',
+        }}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.upperWhiteView}>
