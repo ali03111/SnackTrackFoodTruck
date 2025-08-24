@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "323127891832",
+    "project_id": "snacktrack-truck",
+    "storage_bucket": "snacktrack-truck.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323127891832:android:cdf648f151bdd6ec3fda8d",
+        "android_client_info": {
+          "package_name": "com.codment.snackTrackTruck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323127891832-il0p5e3b64ijvolft83n2dq8cda244su.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codment.snackTrackTruck",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "323127891832-3arhamjcp9cf79rsmlunbvftof5l61td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0IHRHJdj9bSUvUS3l_pcLML6Ynn1CTTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323127891832-3arhamjcp9cf79rsmlunbvftof5l61td.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "323127891832-jj0eljugt7hh47pnt8ulgjpnt40im4f8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codment.snackTrackTruck"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { View, Image, ImageBackground, Text } from 'react-native';
+import { View, Image, ImageBackground, Text, Platform } from 'react-native';
 import { TextComponent } from '../../Components/TextComponent';
 import { styles } from './styles';
 import ThemeButton from '../../Components/ThemeButton';
@@ -51,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
           fontSize: hp('3'),
           fontWeight: 'bold',
           textAlign: 'center',
-          marginTop: hp('8'),
+          marginTop: Platform.OS == 'ios' ? hp('8') : hp('4'),
         }}
         isWhite
       />

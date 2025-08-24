@@ -1,13 +1,15 @@
 const getCredentials = () => {
   if (__DEV__)
     return {
-      baseURL: 'https://budgimate.com/backend/api',
+      baseURL:
+        'https://virtualrealitycreators.com/snack-track-backend/public/api/v1/',
       imageURL: 'https://tac-app-bucket.s3.us-east-2.amazonaws.com/',
     };
   else {
     console.log = () => {};
     return {
-      baseURL: 'https://budgimate.com/backend/api',
+      baseURL:
+        'https://virtualrealitycreators.com/snack-track-backend/public/api/v1/',
       imageURL: 'https://tac-app-bucket.s3.us-east-2.amazonaws.com/',
     };
   }
@@ -31,7 +33,7 @@ export const aboutUrl = 'https://theappforcowboys.com/about_us';
 
 export const MapAPIKey = 'AIzaSyAu-nEBbiOahfUyeMc8Lc1gTTKfete_wnQ';
 
-export const registerUrl = '/signup';
+export const registerUrl = '/register';
 export const loginUrl = '/login';
 export const VerifyUserUrl = '/verify';
 export const createLocationUrl = '/truck/location/create';

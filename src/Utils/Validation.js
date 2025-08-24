@@ -31,16 +31,13 @@ const signUpschema = yup.object().shape({
       'Please enter valid email.',
     ),
 
-  first_name: yup
+  name: yup
     .string()
     .required('Please enter your first name.')
     .max(100, 'Name must be less than 100 characters.')
     .matches(/^[A-Za-z ]*$/, 'Please enter valid name.')
     .min(2, 'Name must be atleast 2 characters.')
     .max(50, 'Name must be of 50 characters.'),
-  last_name: yup
-    .string()
-    .matches(/^[A-Za-z ]*$/, 'Please enter valid last name.'),
   ...passwordSchema,
 });
 const logInUpschema = yup.object().shape({

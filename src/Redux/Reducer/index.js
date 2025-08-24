@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
+import * as thunk from 'redux-thunk';
 
 import AuthReducer from './AuthReducer';
 import loadingReducer from './loadingReducer';
@@ -51,7 +51,7 @@ const ChatNotifyConfig = {
   whitelist: ['isChatNotify'],
 };
 
-const reducers = {
+const rootReducer = combineReducers({
   onboarding: persistReducer(onBoardPersistConfig, onboardingReducer),
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
   isVideo: persistReducer(VideoPersistConfig, videoReducer),
@@ -63,11 +63,12 @@ const reducers = {
   getCategory: getTrainingCatReducer,
   contacts: ContactsReducer,
   modalState: ImagePrevReducer,
-};
+});
 
 export const store = createStore(
-  combineReducers(reducers),
-  // applyMiddleware(thunk),
+  rootReducer,
+  // combineReducers(thunk.thunk),
+  applyMiddleware(thunk.thunk),
 );
 
 export const persistor = persistStore(store);

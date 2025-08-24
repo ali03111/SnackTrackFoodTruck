@@ -1,6 +1,4 @@
 import { types } from '../types';
-import { updateAuth } from './AuthAction';
-import { loadingFalse, loadingTrue } from './isloadingAction';
 import {
   appleIdlogin,
   emailLogin,
@@ -19,6 +17,9 @@ import {
 } from '../../Services/AuthServices';
 import { errorMessage, successMessage } from '../../Config/NotificationMessage';
 import NavigationService from '../../Services/NavigationService';
+import { getUniqueId, getManufacturer } from 'react-native-device-info';
+import { loadingTrue, loadingFalse } from '../Action/isloadingAction';
+import { updateAuth } from '../Action/AuthAction';
 
 const loginObject = {
   Google: () => googleLogin(),
@@ -27,74 +28,86 @@ const loginObject = {
   appleID: () => appleIdlogin(),
 };
 
-export const loginThunk = (datas, type) => async dispatch => {
-  dispatch(loadingTrue());
-  try {
-    const getLoginData = loginObject[type];
-    const resultData = await getLoginData(datas);
-    const { socialData, ok } = { socialData: resultData, ok: true };
+export const loginThunk =
+  ({ datas, type }) =>
+  async dispatch => {
+    console.log('loginThunk', datas, type);
+    dispatch(loadingTrue());
+    try {
+      const loginFunction = loginObject[type];
+      if (!loginFunction) {
+        throw new Error(`Login type ${type} not supported`);
+      }
+      const resultData = await loginFunction(datas); // Pass datas directly
+      const { socialData, ok } = resultData || { socialData: null, ok: false }; // Default to safe values
 
-    if (ok) {
-      const idTokenResult = await getFbResult();
-      const jwtToken = idTokenResult.token;
+      if (ok) {
+        const idTokenResult = await getFbResult();
+        const jwtToken = idTokenResult.token;
+        const uniqueID = await getUniqueId();
+        if (jwtToken) {
+          const { data, ok: registerOk } = await registerService({
+            name: datas?.name || '',
+            device_id: uniqueID,
+            firebase_token: jwtToken,
+            type: 'truck',
+          });
 
-      if (jwtToken) {
-        const { data, ok } = await registerService({
-          token: jwtToken,
-          first_name: datas?.first_name,
-          last_name: datas?.last_name,
-          email: datas?.email,
-          password: datas?.password,
-          phone: datas?.number,
-          company_name: datas?.company_name,
-        });
-
-        if (ok) {
-          dispatch(updateAuth(data));
+          if (registerOk) {
+            dispatch(updateAuth(data));
+          } else {
+            errorMessage(data?.message || 'Registration failed');
+          }
         } else {
-          errorMessage(data?.message);
+          throw new Error('No JWT token received');
+        }
+      } else {
+        throw new Error('Login failed: Invalid response');
+      }
+    } catch (error) {
+      const errorStr = error?.message || 'Unknown error occurred';
+      errorMessage(errorStr);
+      console.log('Login Error:', error.toString());
+    } finally {
+      dispatch(loadingFalse());
+    }
+  };
+
+export const registerThunk =
+  ({ datas }) =>
+  async dispatch => {
+    dispatch(loadingTrue());
+    try {
+      const result = await emailLogin(datas);
+      const { data, ok } = { data: result, ok: true };
+
+      if (ok) {
+        const idTokenResult = await getFbResult();
+        const jwtToken = idTokenResult.token;
+        const uniqueID = await getUniqueId();
+        if (jwtToken) {
+          const { data, ok } = await loginService({
+            device_id: uniqueID,
+            firebase_token: jwtToken,
+            type: 'truck',
+          });
+
+          if (ok) {
+            dispatch(updateAuth(data));
+          } else {
+            errorMessage(data?.message);
+          }
         }
       }
+    } catch (error) {
+      const errorStr =
+        error?.message?.split(' ')?.slice(1)?.join(' ') ?? error.message;
+      errorMessage(errorStr);
+      console.log('Register Error:', error.toString());
+    } finally {
+      dispatch(loadingFalse());
     }
-  } catch (error) {
-    const errorStr =
-      error?.message?.split(' ')?.slice(1)?.join(' ') ?? error.message;
-    errorMessage(errorStr);
-    console.log('Login Error:', error.toString());
-  } finally {
-    dispatch(loadingFalse());
-  }
-};
-
-export const registerThunk = datas => async dispatch => {
-  dispatch(loadingTrue());
-  try {
-    const result = await emailLogin(datas);
-    const { data, ok } = { data: result, ok: true };
-
-    if (ok) {
-      const idTokenResult = await getFbResult();
-      const jwtToken = idTokenResult.token;
-
-      if (jwtToken) {
-        const { data, ok } = await loginService({ token: jwtToken });
-
-        if (ok) {
-          dispatch(updateAuth(data));
-        } else {
-          errorMessage(data?.message);
-        }
-      }
-    }
-  } catch (error) {
-    const errorStr =
-      error?.message?.split(' ')?.slice(1)?.join(' ') ?? error.message;
-    errorMessage(errorStr);
-    console.log('Register Error:', error.toString());
-  } finally {
-    dispatch(loadingFalse());
-  }
-};
+  };
 
 export const logoutThunk = () => async dispatch => {
   try {

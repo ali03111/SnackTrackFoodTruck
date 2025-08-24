@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, ImageBackground, LogBox } from 'react-native';
+import { StyleSheet, ImageBackground, LogBox, Platform } from 'react-native';
 import MainNavigator from './src/Navigation/MainNavigator';
 import { splash2 } from './src/Assets';
 import { hp, wp } from './src/Hooks/useResponsive';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import useReduxStore from './src/Hooks/UseReduxStore';
+import Overlay from './src/Components/Overlay';
 
 const App = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -10,12 +13,24 @@ const App = () => {
     setIsVisible(false);
   };
 
+  const { getState, dispatch } = useReduxStore();
+  const { isloading } = getState('isloading');
+
   // console.log('load', isloading);
   const time = () => {
     return 3000;
   };
 
   useEffect(async () => {
+    GoogleSignin.configure({
+      offlineAccess: true,
+      iosClientId:
+        '323127891832-jj0eljugt7hh47pnt8ulgjpnt40im4f8.apps.googleusercontent.com',
+      webClientId:
+        Platform.OS == 'ios'
+          ? '323127891832-jj0eljugt7hh47pnt8ulgjpnt40im4f8.apps.googleusercontent.com'
+          : '323127891832-il0p5e3b64ijvolft83n2dq8cda244su.apps.googleusercontent.com',
+    });
     (async () => {
       LogBox.ignoreLogs([
         'VirtualizedLists should never be nested',
@@ -50,12 +65,8 @@ const App = () => {
   return (
     <>
       {isVisible === true ? Splash_Screen : <MainNavigator />}
-      {/* {modalType && <ImagePreviewComp visible={modalType} images={image} />}
-      {isloading &&
-        Boolean(getNameFunc?.getCurrentRoute()?.name != 'AllEventsScreen') &&
-        Boolean(getNameFunc?.getCurrentRoute()?.name != 'HomeScreen') && (
-          <Overlay />
-        )} */}
+      {/* {modalType && <ImagePreviewComp visible={modalType} images={image} />} */}
+      {isloading && <Overlay />}
       {/* <StackNavigatior />; */}
     </>
   );

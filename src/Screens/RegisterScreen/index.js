@@ -6,6 +6,7 @@ import {
   ScrollView,
   Linking,
   ImageBackground,
+  Platform,
 } from 'react-native';
 import { TextComponent } from '../../Components/TextComponent';
 import { styles } from './styles';
@@ -64,7 +65,7 @@ const RegisterScreen = ({ navigation }) => {
           fontSize: hp('3'),
           fontWeight: 'bold',
           textAlign: 'center',
-          marginTop: hp('8'),
+          marginTop: Platform.OS == 'ios' ? hp('8') : hp('2'),
         }}
         isWhite
       />
@@ -82,7 +83,7 @@ const RegisterScreen = ({ navigation }) => {
               reset,
               control,
               getValues,
-              placeholder: 'Last Name',
+              placeholder: 'Name',
               defaultValue: __DEV__ ? 'last' : '',
               viewStyle: { height: hp('5') },
               inputIconStyle: { flex: 0.5 },
@@ -143,8 +144,8 @@ const RegisterScreen = ({ navigation }) => {
           <View style={{ paddingVertical: hp('5') }}>
             <ThemeButton
               title={'Register'}
-              onPress={() => navigation.navigate('HomeScreen')}
-              // onPress={handleSubmit(signUpButton)}
+              // onPress={() => navigation.navigate('HomeScreen')}
+              onPress={handleSubmit(signUpButton)}
               style={styles.buttonStyle}
               isTheme
               textStyle={{ fontSize: hp('1.5') }}

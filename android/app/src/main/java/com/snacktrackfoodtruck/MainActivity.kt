@@ -1,4 +1,4 @@
-package com.snacktrackfoodtruck
+package com.codment.snackTrackTruck
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

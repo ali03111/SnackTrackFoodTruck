@@ -2805,18 +2805,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-firebase/auth@npm:^22.4.0":
-  version: 22.4.0
-  resolution: "@react-native-firebase/auth@npm:22.4.0"
+"@react-native-firebase/auth@npm:^23.1.0":
+  version: 23.1.0
+  resolution: "@react-native-firebase/auth@npm:23.1.0"
   dependencies:
     plist: ^3.1.0
   peerDependencies:
-    "@react-native-firebase/app": 22.4.0
+    "@react-native-firebase/app": 23.1.0
     expo: ">=47.0.0"
   peerDependenciesMeta:
     expo:
       optional: true
-  checksum: eecf58938192b107a6617c82e190d4018116fc6b4ce32d56b28d84848d0618818a215fcb3fd2cd2c8e2fc427114c918ff3e0d4b9c3c6d03575dba5f08ab7cdc8
+  checksum: 3334b9642b5216b49fdc1bd5ac6116233cd73a7dfa3141b95a4d1c2c4086d03ab5b2f1dd4ed861bb359511ad0f3082ec713bd36c0d18889bcdabcaf1de63cb62
   languageName: node
   linkType: hard
 
@@ -9044,6 +9044,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-device-info@npm:^14.0.4":
+  version: 14.0.4
+  resolution: "react-native-device-info@npm:14.0.4"
+  peerDependencies:
+    react-native: "*"
+  checksum: aa839dbe7df1246a4b5f9bcfeb3d4cc4be585f13a0d3ff6a03f57a0c2cfe7590291ac292dda4c51fd8765f94c870857676463e8e2f1660b057f3ae2b4335db29
+  languageName: node
+  linkType: hard
+
 "react-native-fast-image@npm:^8.6.3":
   version: 8.6.3
   resolution: "react-native-fast-image@npm:8.6.3"
@@ -9920,7 +9929,7 @@ __metadata:
     "@react-native-community/cli-platform-android": 19.0.0
     "@react-native-community/cli-platform-ios": 19.0.0
     "@react-native-firebase/app": ^22.4.0
-    "@react-native-firebase/auth": ^22.4.0
+    "@react-native-firebase/auth": ^23.1.0
     "@react-native-google-signin/google-signin": ^15.0.0
     "@react-native-masked-view/masked-view": ^0.3.2
     "@react-native/babel-preset": 0.80.0
@@ -9945,6 +9954,7 @@ __metadata:
     react-native-blurhash: ^2.1.1
     react-native-chart-kit: ^6.12.0
     react-native-date-picker: ^5.0.7
+    react-native-device-info: ^14.0.4
     react-native-fast-image: ^8.6.3
     react-native-flash-message: ^0.4.2
     react-native-geolocation-service: ^5.3.1

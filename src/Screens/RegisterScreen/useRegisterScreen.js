@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { loginUser } from '../../Redux/Action/AuthAction';
 import useReduxStore from '../../Hooks/UseReduxStore';
 import { errorMessage } from '../../Config/NotificationMessage';
+import { loginThunk, registerThunk } from '../../Redux/Sagas/AuthSaga';
 
 const { default: useFormHook } = require('../../Hooks/UseFormHooks');
 const { default: Schemas } = require('../../Utils/Validation');
@@ -22,11 +23,12 @@ const useRegister = ({ navigate, goBack }) => {
     setRemember(!remember);
   };
 
-  const signUpButton = ({ first_name, last_name, email, password }) => {
+  const signUpButton = ({ name, email, password }) => {
+    console.log('signUpButton', name, email, password);
     dispatch(
-      loginUser({
+      loginThunk({
         type: 'email',
-        datas: { first_name, email, password, last_name },
+        datas: { name, email, password },
       }),
     );
   };
@@ -38,7 +40,7 @@ const useRegister = ({ navigate, goBack }) => {
   };
 
   const socialLoginFun = type => {
-    dispatch(loginUser({ type, datas: {} }));
+    dispatch(registerThunk({ type, datas: {} }));
   };
 
   const onPress = () => navigate('LoginScreen');
