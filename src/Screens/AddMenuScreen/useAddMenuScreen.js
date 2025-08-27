@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import useFormHook from '../../Hooks/UseFormHooks';
 import Schemas from '../../Utils/Validation';
+import { useQuery } from '@tanstack/react-query';
+import API from '../../Utils/helperFunc';
+import { getDietraiesUrl } from '../../Utils/Urls';
 
 const useAddMenuScreen = () => {
   const [inputWidth, setInputWidth] = useState(20); // starting small
@@ -25,6 +28,11 @@ const useAddMenuScreen = () => {
     errors,
   } = useFormHook(Schemas.addMenu);
 
+  const { data } = useQuery({
+    queryKey: ['dietries'],
+    queryFn: () => API.get(getDietraiesUrl),
+  });
+
   const onSubmit = data => {
     console.log('Form Data:', data);
     // Handle form submission logic here
@@ -39,6 +47,7 @@ const useAddMenuScreen = () => {
     setInputWidth,
     modalState,
     setModalState,
+    allTags: data,
   };
 };
 

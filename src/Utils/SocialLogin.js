@@ -1,4 +1,7 @@
-import auth from '@react-native-firebase/auth';
+import auth, {
+  createUserWithEmailAndPassword,
+  getAuth,
+} from '@react-native-firebase/auth';
 // import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
 import {
   GoogleSignin,
@@ -6,6 +9,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { Platform } from 'react-native';
+import { getApp } from '@react-native-firebase/app';
 
 export const faceBookLogin = async () => {
   // if (Platform.OS === 'android') {
@@ -110,9 +114,16 @@ export const forgotPasswordServices = async email =>
   auth().sendPasswordResetEmail(email);
 
 export const emailSignUp = async ({ email, password }) => {
-  console.log('dffs', email, password);
-  const data = await auth().createUserWithEmailAndPassword(email, password);
-  return data;
+  const app = getApp(); // Use default app
+  const auth = getAuth(app);
+  // Firebase registration and token retrieval
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
+  const firebaseToken = await userCredential.user.getIdToken();
+  return { ...userCredential, firebaseToken };
 };
 
 export const emailLogin = async ({ email, password }) => {

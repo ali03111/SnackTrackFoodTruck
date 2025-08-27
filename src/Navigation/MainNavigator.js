@@ -35,37 +35,50 @@ function MainNavigator() {
             />
           </>
         )}
-        {!onboarding && (
+        {/* {!onboarding && (
           <Stack.Screen
             name="OnBoardScreen"
             component={Screens.OnBoardScreen}
           />
+        )} */}
+        {isLogin && (
+          <>
+            <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
+            <Stack.Screen name="OrderScreen" component={Screens.OrderScreen} />
+            <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
+
+            <Stack.Screen
+              name="ChangePasswordScreen"
+              component={Screens.ChangePasswordScreen}
+            />
+            <Stack.Screen
+              name="SettingScreen"
+              component={Screens.SettingScreen}
+            />
+            <Stack.Screen
+              name="MenuDetailScreen"
+              component={Screens.MenuDetailScreen}
+            />
+            <Stack.Screen
+              name="MyMenuScreen"
+              component={Screens.MyMenuScreen}
+            />
+            <Stack.Screen
+              name="AddMenuScreen"
+              component={Screens.AddMenuScreen}
+            />
+
+            <Stack.Screen
+              name="MyLocationScreen"
+              component={Screens.MyLocationScreen}
+            />
+
+            <Stack.Screen
+              name="AddLocationScreen"
+              component={Screens.AddLocationScreen}
+            />
+          </>
         )}
-        <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
-        <Stack.Screen name="OrderScreen" component={Screens.OrderScreen} />
-        <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
-
-        <Stack.Screen
-          name="ChangePasswordScreen"
-          component={Screens.ChangePasswordScreen}
-        />
-        <Stack.Screen name="SettingScreen" component={Screens.SettingScreen} />
-        <Stack.Screen
-          name="MenuDetailScreen"
-          component={Screens.MenuDetailScreen}
-        />
-        <Stack.Screen name="MyMenuScreen" component={Screens.MyMenuScreen} />
-        <Stack.Screen name="AddMenuScreen" component={Screens.AddMenuScreen} />
-
-        <Stack.Screen
-          name="MyLocationScreen"
-          component={Screens.MyLocationScreen}
-        />
-
-        <Stack.Screen
-          name="AddLocationScreen"
-          component={Screens.AddLocationScreen}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );

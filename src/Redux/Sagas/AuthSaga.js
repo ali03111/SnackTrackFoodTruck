@@ -39,11 +39,14 @@ export const loginThunk =
         throw new Error(`Login type ${type} not supported`);
       }
       const resultData = await loginFunction(datas); // Pass datas directly
-      const { socialData, ok } = resultData || { socialData: null, ok: false }; // Default to safe values
+      const { socialData, ok } = resultData || { socialData: null, ok: true }; // Default to safe values
 
-      if (ok) {
-        const idTokenResult = await getFbResult();
-        const jwtToken = idTokenResult.token;
+      console.log('Login Resuldssdvsdt:', resultData);
+      if (true) {
+        // const idTokenResult = await getFbResult(resultData);
+
+        const jwtToken = resultData?.firebaseToken;
+        console.log('Login Resuldssdvsdt:', jwtToken, resultData);
         const uniqueID = await getUniqueId();
         if (jwtToken) {
           const { data, ok: registerOk } = await registerService({
@@ -52,7 +55,12 @@ export const loginThunk =
             firebase_token: jwtToken,
             type: 'truck',
           });
-          console.log('Login Error:', data);
+          console.log('Login Error:', data, {
+            name: datas?.name || '',
+            device_id: uniqueID,
+            firebase_token: jwtToken,
+            type: 'truck',
+          });
           if (registerOk) {
             dispatch(updateAuth(data));
           } else {
@@ -61,13 +69,11 @@ export const loginThunk =
         } else {
           throw new Error('No JWT token received');
         }
-      } else {
-        throw new Error('Login failed: Invalid response');
       }
     } catch (error) {
       const errorStr = error?.message || 'Unknown error occurred';
       errorMessage(errorStr);
-      console.log('Login Error:', error.toString());
+      // console.log('Login Error:', error.toString());
     } finally {
       dispatch(loadingFalse());
     }
@@ -81,7 +87,7 @@ export const registerThunk =
       const result = await emailLogin(datas);
       const { data, ok } = { data: result, ok: true };
 
-      if (ok) {
+      if (true) {
         const idTokenResult = await getFbResult();
         const jwtToken = idTokenResult.token;
         const uniqueID = await getUniqueId();

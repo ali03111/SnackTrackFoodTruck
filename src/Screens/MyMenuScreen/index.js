@@ -9,7 +9,7 @@ import { Colors } from '../../Theme/Variables';
 import { styles } from './styles';
 import MyMenuComp from '../../Components/MyMenuComp';
 
-const MyMenuScreen = () => {
+const MyMenuScreen = ({ navigation }) => {
   const foodList = [
     {
       title: 'Vegetable soup',
@@ -36,7 +36,11 @@ const MyMenuScreen = () => {
   };
   return (
     <View style={{ flex: 1 }}>
-      <HeaderComponent headerTitle={'Menu'} rightIconImg={circleYellow} />
+      <HeaderComponent
+        headerTitle={'Menu'}
+        rightIconImg={circleYellow}
+        onRightPress={() => navigation.navigate('AddMenuScreen')}
+      />
       <FlatList
         data={foodList}
         renderItem={renderItem}

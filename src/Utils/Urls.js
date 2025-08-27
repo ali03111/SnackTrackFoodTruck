@@ -3,14 +3,16 @@ const getCredentials = () => {
     return {
       baseURL:
         'https://virtualrealitycreators.com/snack-track-backend/public/api/v1/',
-      imageURL: 'https://tac-app-bucket.s3.us-east-2.amazonaws.com/',
+      imageURL:
+        'https://virtualrealitycreators.com/snack-track-backend/public/storage/public/',
     };
   else {
     console.log = () => {};
     return {
       baseURL:
         'https://virtualrealitycreators.com/snack-track-backend/public/api/v1/',
-      imageURL: 'https://tac-app-bucket.s3.us-east-2.amazonaws.com/',
+      imageURL:
+        'https://virtualrealitycreators.com/snack-track-backend/public/storage/public/',
     };
   }
 };
@@ -37,6 +39,8 @@ export const registerUrl = '/register';
 export const loginUrl = '/login';
 export const VerifyUserUrl = '/verify';
 export const createLocationUrl = '/truck/location/create';
+
+export const getDietraiesUrl = '/truck/dietary/list';
 
 export const allEventTypeUrl = '/setup/event-types';
 export const onBoardConpleteUrl = '/on-board';

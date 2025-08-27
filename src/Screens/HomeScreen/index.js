@@ -37,6 +37,7 @@ import HomeLocationCardComp from '../../Components/HomeLocationCardComp';
 import { MultiView } from '../../Components/MultiView';
 import { MultiSelectBtn } from '../../Components/MultiSelectBtn';
 import RecentOrderComp from '../../Components/RecentOrderComp';
+import useHomeScreen from './useHomeScreen';
 
 const categoryItem = [
   {
@@ -70,6 +71,8 @@ const centerView = [
 ];
 
 const HomeScreen = () => {
+  const { userData } = useHomeScreen();
+
   const renderItem = useCallback(({ item, index }) => {
     return (
       <RecentOrderComp
@@ -101,8 +104,11 @@ const HomeScreen = () => {
               resizeMode="contain"
               style={styles.cardIcon}
             />
-            <TextComponent text={'0'} styles={styles.cardTextSpacing} />
-            <TextComponent text={'No ratings'} fade size={'1.5'} />
+            <TextComponent
+              text={userData?.avg_rating}
+              styles={styles.cardTextSpacing}
+            />
+            <TextComponent text={'Ratings'} fade size={'1.5'} />
           </View>
           <View style={styles.card}>
             <Image

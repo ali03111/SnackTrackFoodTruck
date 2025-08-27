@@ -35,7 +35,10 @@ const AddMenuScreen = () => {
     setInputWidth,
     modalState,
     setModalState,
+    allTags,
   } = useAddMenuScreen();
+
+  console.log('allTags', allTags);
 
   const TitleInputView = ({
     title,
@@ -247,15 +250,10 @@ const AddMenuScreen = () => {
                               }
                             : uploadImgRed
                         }
-                        // resizeMode="contain"
+                        resizeMode={value?.uri ? 'cover' : 'contain'}
                         style={{
                           ...styles.uploadImg,
-                          ...(value?.uri
-                            ? {
-                                width: wp('92'),
-                                borderRadius: 10,
-                              }
-                            : {}),
+                          borderRadius: 10,
                         }}
                       />
                     </Touchable>

@@ -5,20 +5,19 @@ import { CircleImage } from './CircleImage';
 import { TextComponent } from './TextComponent';
 import { notificationWhite } from '../Assets';
 import { Touchable } from './Touchable';
+import useReduxStore from '../Hooks/UseReduxStore';
+import { imageUrl } from '../Utils/Urls';
 
 const HomeHeaderComp = () => {
+  const { getState } = useReduxStore();
+  const { userData } = getState('Auth');
+  console.log('User Data in header', userData);
   return (
     <View style={styles.container}>
-      <CircleImage
-        image={
-          'https://images.pexels.com/photos/15157857/pexels-photo-15157857.jpeg'
-        }
-        uri={true}
-        size={0.12}
-      />
+      <CircleImage image={imageUrl(userData?.image)} uri={true} size={0.12} />
       <View style={styles.textContainer}>
         <TextComponent text={'Hello,'} isWhite styles={styles.greeting} />
-        <TextComponent text={'John Mayer'} isWhite styles={styles.name} />
+        <TextComponent text={userData?.name} isWhite styles={styles.name} />
       </View>
       <Touchable>
         <Image

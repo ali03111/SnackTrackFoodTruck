@@ -41,7 +41,7 @@ export const TextComponent = ({
           ? 'gray'
           : Colors.black,
         fontSize: hp(size ?? '2'),
-        fontWeight: family ?? '100',
+        fontWeight: family ?? '300',
         ...styles,
       }}
     >

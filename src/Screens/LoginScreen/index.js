@@ -71,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
               getValues,
               placeholder: 'Email*',
               // isImage: emailIcon,
-              defaultValue: __DEV__ ? 'iphone15@gmail.com' : '',
+              defaultValue: __DEV__ ? 'androidtruck@gmail.com' : '',
               maxLength: 50,
             }}
           />

@@ -78,9 +78,9 @@ const Tab = createBottomTabNavigator();
 function MybottomTabs() {
   const { getState, dispatch } = useReduxStore();
 
-  const { isChatNotify } = getState('isChatNotify');
-
-  fetchGetWithToken(VerifyUserUrl);
+  const { userData } = getState('Auth');
+  console.log('User Data in bottom tab', userData);
+  // fetchGetWithToken(VerifyUserUrl);
 
   return (
     <Tab.Navigator
