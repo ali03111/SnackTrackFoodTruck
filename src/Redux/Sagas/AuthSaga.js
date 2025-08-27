@@ -52,7 +52,7 @@ export const loginThunk =
             firebase_token: jwtToken,
             type: 'truck',
           });
-
+          console.log('Login Error:', data);
           if (registerOk) {
             dispatch(updateAuth(data));
           } else {
@@ -91,7 +91,7 @@ export const registerThunk =
             firebase_token: jwtToken,
             type: 'truck',
           });
-
+          console.log('Register Error:', data);
           if (ok) {
             dispatch(updateAuth(data));
           } else {
@@ -100,10 +100,10 @@ export const registerThunk =
         }
       }
     } catch (error) {
+      console.log('Register Error:', error);
       const errorStr =
         error?.message?.split(' ')?.slice(1)?.join(' ') ?? error.message;
       errorMessage(errorStr);
-      console.log('Register Error:', error.toString());
     } finally {
       dispatch(loadingFalse());
     }
