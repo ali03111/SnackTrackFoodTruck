@@ -24,7 +24,7 @@ const onBoardPersistConfig = {
 const AuthPersistConfig = {
   key: 'Auth',
   storage: AsyncStorage,
-  whitelist: ['userData', 'token', 'isLogin'],
+  whitelist: ['userData', 'token', 'isLogin', 'deviceId'],
 };
 
 const VideoPersistConfig = {

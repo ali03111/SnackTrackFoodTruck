@@ -6,9 +6,16 @@ import { useCallback, useState } from 'react';
 import {
   formatTimeTo24Hour,
   getCustom12HourTime,
+  getFormattedTime,
 } from '../../Services/GlobalFunctions';
+import { useMutation } from '@tanstack/react-query';
+import { createLocationUrl } from '../../Utils/Urls';
+import API from '../../Utils/helperFunc';
+import { errorMessage, successMessage } from '../../Config/NotificationMessage';
+import useReduxStore from '../../Hooks/UseReduxStore';
 
-const useAddLocationScreen = () => {
+const useAddLocationScreen = ({ goBack }) => {
+  const { queryClient } = useReduxStore();
   const [timePickerState, setTimePickerState] = useState(null);
 
   const daysOfWeek = [
@@ -23,15 +30,15 @@ const useAddLocationScreen = () => {
 
   const initialOperationDays = daysOfWeek.map(day => ({
     day,
-    startTime: '--:--',
-    endTime: '--:--',
+    startTime: { time24: '--:--', time12: '--:--' },
+    endTime: { time24: '--:--', time12: '--:--' },
     isSelected: false,
   }));
 
   const {
     control,
     register,
-    handleSubmit,
+    handleSubmit: formHandleSubmit,
     clearErrors,
     reset,
     getFieldState,
@@ -62,62 +69,85 @@ const useAddLocationScreen = () => {
   };
 
   const afterSelectTime = (index, startTime, endTime) => {
-    console.log(
-      'jksdbvkjsbdjkbjksdbvkjsdbkvbdskjvbsd',
-      index,
-      startTime,
-      endTime,
-    );
-
     const current = fields[index];
+    const isValidStart = startTime.time24 !== '--:--';
+    const isValidEnd = endTime.time24 !== '--:--';
     update(index, {
       ...current,
-      startTime,
-      endTime,
+      startTime: isValidStart ? startTime : current.startTime,
+      endTime: isValidEnd ? endTime : current.endTime,
+      isSelected: isValidStart && isValidEnd,
     });
   };
-  // Copy of the default time array for local manipulation
-  // const timeDateArry = [...defaultTimeDateArry];
 
-  // Transform and inject operationDays before submit
-  const onSubmit = useCallback(
-    callback =>
-      handleSubmit(formData => {
-        const operationDays = [...timeDateArry]
-          .filter(day => day.isSelected)
-          .map(day => ({
-            day: day.title,
-            startTime: day.openTime,
-            endTime: day.closeTime,
-          }));
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: data => {
+      console.log('Sending data to API:', data); // Debug log
+      return API.post(createLocationUrl, data);
+    },
+    onSuccess: ({ ok, data }) => {
+      console.log('API response:', { ok, data }); // Debug log
+      if (ok) {
+        successMessage('Post Created.');
+        goBack();
+        queryClient.invalidateQueries(['myLocationsList']);
+      } else {
+        errorMessage(data?.message || 'Failed to create location.');
+      }
+    },
+    onError: error => {
+      console.log('API error:', error); // Debug log
+      errorMessage('Problem occurred while uploading data.');
+    },
+  });
 
-        const finalFormData = {
-          ...formData,
-          operationDays,
-        };
+  const onSubmit = useCallback(formData => {
+    console.log('onSubmit triggered with formData:', formData); // Debug log
+    const operationDays = fields
+      .filter(day => day.isSelected)
+      .map(day => ({
+        day: day.day,
+        startTime: day.startTime,
+        endTime: day.endTime,
+      }));
 
-        callback(finalFormData);
-      })(),
-    [handleSubmit, timeDateArry],
-  );
+    const finalFormData = {
+      ...formData,
+      operationDays,
+    };
 
+    console.log('Final form data:', finalFormData); // Debug log
+    mutateAsync({
+      latitude: finalFormData?.truckLocation?.coords?.latitude ?? '5575',
+      longitude: finalFormData?.truckLocation?.coords?.longitude ?? '527',
+      parking: Boolean(finalFormData?.parkingAvailable === 1),
+      seating: Boolean(finalFormData?.seatAvailable === 1),
+      notes: finalFormData?.specialNotes,
+      timings: {
+        truckName: finalFormData.truckName,
+        operationDays: finalFormData.operationDays,
+      },
+    });
+  }, []);
   const toggleTimePicker = index => {
     setTimePickerState(index);
   };
 
+  console.log('Returning handleSubmit:', formHandleSubmit(onSubmit)); // Debug log
   return {
     control,
     errors,
-    handleSubmit: onSubmit, // use this in your component
+    handleSubmit: formHandleSubmit(onSubmit),
     setValue,
     getValues,
     reset,
-    timeDateArry, // pass to the component if needed
+    timeDateArry,
     fields,
     toggleDaySelected,
     toggleTimePicker,
     timePickerState,
     afterSelectTime,
+    isLoading,
   };
 };
 

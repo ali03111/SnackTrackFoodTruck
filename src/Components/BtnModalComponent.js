@@ -33,7 +33,7 @@ const BtnModalComponent = ({
   allData,
 }) => {
   const [innerDataState, setInnerDateState] = useState({
-    selectedBtn: activeTags?.eventTypes,
+    selectedBtn: activeTags,
   });
 
   // Calculate 13 years ago from today
@@ -72,9 +72,7 @@ const BtnModalComponent = ({
         animationType="fade"
         // hideModalContentWhileAnimating
         // useNativeDriver
-        onBackButtonPress={
-          firstHit && activeTags.length == 0 ? onPress : onBackPress
-        }
+        onBackButtonPress={onBackPress}
         style={styles.bottomModal}
       >
         <View
@@ -95,9 +93,7 @@ const BtnModalComponent = ({
                 resizeMode="contain"
                 style={styles.divider}
               />
-              <Touchable
-                onPress={() => (onPress ? onPress({}, false) : onBackPress())}
-              >
+              <Touchable onPress={() => onBackPress()}>
                 <Image
                   source={crossWhite}
                   resizeMode="contain"
@@ -116,19 +112,20 @@ const BtnModalComponent = ({
                 isMultipule
                 selectedAlter={selectedBtn}
                 // selectedBgColor={Colors.backgroundTheme}
-                textStyle={{ fontSize: hp('1.2'), color: 'black' }}
-                btnStyle={{
-                  height: 'auto',
-                  paddingVertical: hp('0.5'),
-                  paddingHorizontal: wp('2'),
-                }}
+                // textStyle={{ fontSize: hp('1.2'), color: 'black' }}
+                // btnStyle={{
+                //   height: 'auto',
+                //   paddingVertical: hp('0.5'),
+                //   paddingHorizontal: wp('2'),
+                // }}
+                isPrimaryColorStyle
                 onSelectVal={(objId, item) => {
                   if (Boolean(selectedBtn?.find(res => res?.id == item?.id))) {
                     onChangeVal(
                       'selectedBtn',
                       selectedBtn?.filter(res => res?.id != item?.id),
                     );
-                  } else onChangeVal('selectedBtn', [...selectedBtn, , item]);
+                  } else onChangeVal('selectedBtn', [...selectedBtn, item]);
                 }}
               />
             </ScrollView>
@@ -138,7 +135,8 @@ const BtnModalComponent = ({
                 title={'Save'}
                 btnStyle={styles.modalBtn}
                 onPress={() => {
-                  //   onPress({...innerDataState, firstName, lastName}, true);
+                  onPress(innerDataState.selectedBtn, true);
+                  onBackPress();
                 }}
                 isYellowTheme
                 textStyle={{ fontSize: hp('1.5') }}

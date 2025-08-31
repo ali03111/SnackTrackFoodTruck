@@ -37,10 +37,19 @@ export const MapAPIKey = 'AIzaSyAu-nEBbiOahfUyeMc8Lc1gTTKfete_wnQ';
 
 export const registerUrl = '/register';
 export const loginUrl = '/login';
-export const VerifyUserUrl = '/verify';
+export const updateProfileUrl = 'truck/update-profile';
+export const VerifyUserUrl = '/update-profile';
+
 export const createLocationUrl = '/truck/location/create';
+export const getLocationUrl = '/truck/location/list';
+
+export const createMenuUrl = '/truck/menu/create';
+export const getMenuUrl = '/truck/menu/list';
+export const deleteMenuUrl = '/truck/menu/delete';
 
 export const getDietraiesUrl = '/truck/dietary/list';
+
+export const TestLoginUrl = '/login2';
 
 export const allEventTypeUrl = '/setup/event-types';
 export const onBoardConpleteUrl = '/on-board';
@@ -51,7 +60,6 @@ export const getEventByDatesUrl = '/events/get-with-date';
 export const getEventDetailsUrl = '/events/';
 export const getSuggestedFriendsUrl = '/friends/suggestions';
 export const getMyFriendsUrl = '/friends/list?';
-export const editProfileUrl = '/profile-update';
 export const createPostUrl = '/posts/store';
 export const sendFriendReqUrl = '/friend-request/send/';
 export const acceptFriendReqUrl = '/friend-request/accept-request/';

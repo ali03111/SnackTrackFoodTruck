@@ -78,8 +78,8 @@ const Tab = createBottomTabNavigator();
 function MybottomTabs() {
   const { getState, dispatch } = useReduxStore();
 
-  const { userData } = getState('Auth');
-  console.log('User Data in bottom tab', userData);
+  const { userData, deviceId, token } = getState('Auth');
+  console.log('User Data in bottom tab', userData, deviceId, token);
   // fetchGetWithToken(VerifyUserUrl);
 
   return (

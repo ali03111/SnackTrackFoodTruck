@@ -25,7 +25,7 @@ import {
 } from '../../Services/GlobalFunctions';
 import { imageUrl } from '../../Utils/Urls';
 
-const AddMenuScreen = () => {
+const AddMenuScreen = ({ navigation }) => {
   const {
     control,
     handleSubmit,
@@ -36,7 +36,7 @@ const AddMenuScreen = () => {
     modalState,
     setModalState,
     allTags,
-  } = useAddMenuScreen();
+  } = useAddMenuScreen(navigation);
 
   console.log('allTags', allTags);
 
@@ -272,15 +272,13 @@ const AddMenuScreen = () => {
 
         <TitleInputView
           title={'Dietary Information'}
-          errorName={errors['operationDays']}
+          errorName={errors['dietaryList']}
           innerViewOuterStyle={{ height: 'auto' }}
           innerLeftView={
             <Controller
               control={control}
-              name="operationDays"
-              render={({
-                field: { onChange, value = [1, 2, 3, 4, 6, 7, 8, 9] },
-              }) =>
+              name="dietaryList"
+              render={({ field: { onChange, value = [] } }) =>
                 value.length > 0 ? (
                   <View
                     style={{
@@ -291,7 +289,7 @@ const AddMenuScreen = () => {
                     {value.map(res => {
                       return (
                         <ThemeButton
-                          title={'Vegan'}
+                          title={res?.name}
                           btnStyle={styles.dietaryBtn}
                           textStyle={{
                             fontSize: hp('1.5'),
@@ -315,6 +313,7 @@ const AddMenuScreen = () => {
                       text={'select Dietary Information'}
                       styles={{
                         ...styles.textStyle,
+                        marginVertical: hp('1'),
                         //   width: wp('80'),
                       }}
                       size={'1.5'}
@@ -327,10 +326,8 @@ const AddMenuScreen = () => {
           innerExtraView={
             <Controller
               control={control}
-              name="eventLocation"
-              render={({
-                field: { onChange, value = [1, 2, 3, 4, 6, 7, 8, 9] },
-              }) =>
+              name="dietaryList"
+              render={({ field: { onChange, value = [] } }) =>
                 value.length > 0 ? (
                   <TextComponent
                     text={'Add more'}
@@ -355,42 +352,28 @@ const AddMenuScreen = () => {
           isTheme
           btnStyle={styles.saveBtn}
           textStyle={{ fontSize: hp('1.5') }}
+          onPress={handleSubmit(onSubmit)}
         />
       </KeyBoardWrapper>
       {modalState && (
-        <BtnModalComponent
-          activeTags={[]}
-          allData={
-            [
-              {
-                id: 1,
-                title: 'Gluten free',
-              },
-              {
-                id: 2,
-                title: 'Dairy free',
-              },
-              {
-                id: 3,
-                title: 'Paleo',
-              },
-              {
-                id: 4,
-                title: 'Vegetarian',
-              },
-              {
-                id: 5,
-                title: 'FODMAP',
-              },
-            ] ?? []
-          }
-          //   heading={onPressKey}
-          activeTitle={'select Diet'}
-          isModal={modalState}
-          onPress={() => setModalState(false)}
-          onSelect={() => {}}
-          //   onPress={(e, isTrue) => toggleModal(e, isTrue)}
-          onBackPress={() => setModalState(false)}
+        <Controller
+          control={control}
+          name="dietaryList"
+          render={({ field: { onChange, value = [] } }) => (
+            <BtnModalComponent
+              activeTags={value}
+              allData={allTags}
+              //   heading={onPressKey}
+              activeTitle={'select Diet'}
+              isModal={modalState}
+              // onPress={() => setModalState(false)}
+              onSelect={() => {}}
+              onPress={(e, isTrue) => {
+                onChange(e);
+              }}
+              onBackPress={() => setModalState(false)}
+            />
+          )}
         />
       )}
     </View>

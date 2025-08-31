@@ -15,6 +15,7 @@ import {
   supportYellow,
   termYellow,
 } from '../../Assets';
+import NavigationService from '../../Services/NavigationService';
 
 const SettingScreen = () => {
   const Account = {
@@ -24,11 +25,13 @@ const SettingScreen = () => {
         title: `Profile`,
         leftIcon: profileYellow,
         subView: 'View and edit your profile',
+        onPress: () => NavigationService.navigate('EditProfileScreen'),
       },
       {
         title: 'Password',
         leftIcon: changePassYellow,
         subView: 'Change your password',
+        onPress: () => NavigationService.navigate('ChangePasswordScreen'),
       },
     ],
   };

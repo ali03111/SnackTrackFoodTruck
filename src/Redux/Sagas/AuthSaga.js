@@ -62,7 +62,7 @@ export const loginThunk =
             type: 'truck',
           });
           if (registerOk) {
-            dispatch(updateAuth(data));
+            dispatch(updateAuth({ ...data, deviceId: uniqueID }));
           } else {
             errorMessage(data?.message || 'Registration failed');
           }
@@ -99,7 +99,7 @@ export const registerThunk =
           });
           console.log('Register Error:', data);
           if (ok) {
-            dispatch(updateAuth(data));
+            dispatch(updateAuth({ ...data, deviceId: uniqueID }));
           } else {
             errorMessage(data?.message);
           }

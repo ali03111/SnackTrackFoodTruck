@@ -1,17 +1,19 @@
-import {types} from '../types';
+import { types } from '../types';
 
 const initial_state = {
   userData: {},
   token: '',
   isLogin: false,
+  deviceId: null,
 };
 
 const actionMap = {
   [types.UpdateAuth]: (state, act) => {
     return {
       userData: act.payload.user,
-      token: act.payload.token,
+      token: act.payload.access_token,
       isLogin: true,
+      deviceId: act.payload?.deviceId,
     };
   },
   [types.LogoutType]: () => initial_state,

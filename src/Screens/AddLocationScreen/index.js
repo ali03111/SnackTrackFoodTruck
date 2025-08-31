@@ -14,7 +14,7 @@ import { timeDateArry } from '../../Utils/localDB';
 import ThemeButton from '../../Components/ThemeButton';
 import TimePickerModal from '../../Components/TimePickerModal';
 
-const AddLocationScreen = () => {
+const AddLocationScreen = ({ navigation }) => {
   const {
     control,
     errors,
@@ -23,7 +23,11 @@ const AddLocationScreen = () => {
     toggleDaySelected,
     toggleTimePicker,
     afterSelectTime,
-  } = useAddLocationScreen();
+    handleSubmit,
+    isLoading,
+  } = useAddLocationScreen({ goBack: () => navigation.goBack() });
+
+  console.log('errorserrorserrorserrorserrorserrors', errors);
 
   const TitleInputView = ({
     title,
@@ -296,7 +300,7 @@ const AddLocationScreen = () => {
           {fields.map((field, index) => {
             const openTime = field.startTime;
             const closeTime = field.endTime;
-            const isSelected = field.isSelected ?? true; // default to true for now
+            const isSelected = field.isSelected ?? true;
 
             return (
               <TitleInputView
@@ -357,7 +361,7 @@ const AddLocationScreen = () => {
             title={'Save'}
             btnStyle={styles.saveBtn}
             textStyle={{ fontSize: hp('1.5') }}
-            // onPress={handleSubmit(onSubmit)}
+            onPress={handleSubmit}
           />
         </View>
       </KeyBoardWrapper>

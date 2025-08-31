@@ -46,6 +46,10 @@ function MainNavigator() {
             <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
             <Stack.Screen name="OrderScreen" component={Screens.OrderScreen} />
             <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
+            <Stack.Screen
+              name="EditProfileScreen"
+              component={Screens.EditProfileScreen}
+            />
 
             <Stack.Screen
               name="ChangePasswordScreen"

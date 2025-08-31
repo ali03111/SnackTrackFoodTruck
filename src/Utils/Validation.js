@@ -98,17 +98,6 @@ const editProfileScheme = yup.object().shape({
     .matches(/^[A-Za-z ]*$/, 'Please enter valid name.')
     .min(2, 'Name must be atleast 2 characters.')
     .max(50, 'Name must be of 50 characters.'),
-  last_name: yup.string().required('Please enter your last name.'),
-  company_name: yup
-    .string()
-    .required('Please enter your Company Name.')
-    .max(100, 'Name must be less than 100 characters.')
-    .min(2, 'Name must be atleast 2 characters.')
-    .max(50, 'Name must be of 50 characters.'),
-  email: yup
-    .string()
-    .email('Email must be valid.')
-    .required('Please enter your email.'),
 });
 const demoKitSchema = yup.object().shape({
   email: yup
@@ -164,26 +153,53 @@ const addLocationSchema = yup.object().shape({
       yup.object().shape({
         day: yup.string().required('Day is required'),
         startTime: yup
-          .string()
+          .object({
+            time24: yup.string(),
+            time12: yup.string(),
+          })
           .test(
-            'not-default',
             'Start time is required',
-            val => val !== '--:--',
+            'Start time is required',
+            val => val.time24 !== '--:--' || !this.parent.isSelected,
           ),
         endTime: yup
-          .string()
-          .test('not-default', 'End time is required', val => val !== '--:--'),
+          .object({
+            time24: yup.string(),
+            time12: yup.string(),
+          })
+          .test(
+            'End time is required',
+            'End time is required',
+            val => val.time24 !== '--:--' || !this.parent.isSelected,
+          ),
+        isSelected: yup.boolean().required(),
       }),
     )
-    .min(1, 'At least one operating day is required'),
+    .test(
+      'at-least-one-selected',
+      'At least one day must be selected with valid times',
+      function (value) {
+        if (!value || value.length === 0) return true; // Allow empty array initially
+        const selectedDays = value.filter(day => day.isSelected);
+        return (
+          selectedDays.length === 0 ||
+          selectedDays.some(
+            day =>
+              day.startTime.time24 !== '--:--' &&
+              day.endTime.time24 !== '--:--',
+          )
+        );
+      },
+    ),
   truckLocation: yup.object().shape({
-    locationName: yup.string().required('Event location Name is required'),
+    locationName: yup.string(),
     coords: yup.object().shape({
-      latitude: yup.string().required('Please select locaiton'),
-      longitude: yup.string().required('Please select locaiton'),
+      latitude: yup.string(),
+      longitude: yup.string(),
     }),
   }),
 });
+
 const addMenuchema = yup.object().shape({
   menuName: yup
     .string()
@@ -192,10 +208,10 @@ const addMenuchema = yup.object().shape({
   description: yup.string(),
   price: yup.string(),
   img: yup.mixed().required('Event image is required'),
-  operationDays: yup
+  dietaryList: yup
     .array()
     .of(yup.object())
-    .min(1, 'At least one operating day is required'),
+    .min(1, 'At least one dietary is required'),
 });
 
 const Schemas = {

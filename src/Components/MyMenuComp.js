@@ -11,22 +11,53 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import { deleteMenuUrl, imageUrl } from '../Utils/Urls';
+import BlurImage from './BlurImage';
+import API from '../Utils/helperFunc';
+import { useMutation } from '@tanstack/react-query';
+import { errorMessage, successMessage } from '../Config/NotificationMessage';
+import useReduxStore from '../Hooks/UseReduxStore';
 
 const MyMenuComp = ({ item }) => {
-  const dietary = item.dietary.slice(0, 2).join(', ');
+  const { queryClient } = useReduxStore();
+
+  const { mutateAsync } = useMutation({
+    mutationFn: data => {
+      return API.delete(deleteMenuUrl, {
+        id: item?.id,
+      });
+    },
+    onSuccess: ({ ok, data }) => {
+      if (ok) {
+        successMessage(data?.message);
+      } else {
+        console.log('jkdsbkljsdbvklsdbvklsbklvsvd', data);
+        errorMessage(data?.message);
+      }
+    },
+    onError: () => {
+      errorMessage('Network request failed.');
+    },
+  });
+
+  // Extract names from dietary_information array and slice the first 2
+  const dietaryNames = item.dietary_information.map(d => d.name);
+  const dietary = dietaryNames.slice(0, 2).join(', ');
   const extraCount =
-    item.dietary.length > 2 ? ` +${item.dietary.length - 2}` : '';
+    item.dietary_information.length > 2
+      ? ` +${item.dietary_information.length - 2}`
+      : '';
 
   return (
     <View style={styles.card}>
-      <Image source={item.image} style={styles.foodImage} />
+      <BlurImage source={imageUrl(item.image)} styles={styles.foodImage} />
 
       <View style={styles.content}>
-        <TextComponent text={item.title} family="bold" />
+        <TextComponent text={item.name} family="bold" />
 
         <View style={styles.priceBadge}>
           <TextComponent
-            text={`$ ${item.price.toFixed(2)}`}
+            text={`$ ${item.price}`}
             family="bold"
             color={Colors.white}
             size={'1.5'}
@@ -46,12 +77,15 @@ const MyMenuComp = ({ item }) => {
         </MenuTrigger>
         <MenuOptions>
           <MenuOption text="Edit" />
-          <MenuOption text="Delete" />
+          <MenuOption
+            text="Delete"
+            onSelect={async () => {
+              await mutateAsync();
+              queryClient.invalidateQueries(['myMenuList']);
+            }}
+          />
         </MenuOptions>
       </Menu>
-      {/* <Touchable onPress={() => {}} style={styles.menuBtn}>
-        <Image source={threeDotsIcon} style={styles.menuIcon} />
-      </Touchable> */}
     </View>
   );
 };
@@ -88,9 +122,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: wp(2),
     paddingVertical: hp(0.3),
-  },
-  menuBtn: {
-    paddingHorizontal: wp(2),
   },
   menuIcon: {
     width: wp(4),

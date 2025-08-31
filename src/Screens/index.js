@@ -10,3 +10,4 @@ export { default as MenuDetailScreen } from './MenuDetailScreen';
 export { default as SettingScreen } from './SettingScreen';
 export { default as ChangePasswordScreen } from './ChangePasswordScreen';
 export { default as OrderScreen } from './OrderScreen';
+export { default as EditProfileScreen } from './EditProfileScreen';

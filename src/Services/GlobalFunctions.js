@@ -528,7 +528,7 @@ const getIdsFromArry = (arry, key) => {
 //GET IMAGE From Mobile
 const uploadFromGalary = async isMulti => {
   const imageData = await ImageCropPicker.openPicker({
-    cropping: true,
+    cropping: false,
     width: 300, // set desired resolution
     height: 300,
     // compressImageQuality: 0.8,

@@ -6,8 +6,11 @@ import { AniFlatOneByOne } from '../../AnimatedComp/AniFlatOneByOne';
 import { styles } from './styles';
 import LocationCardCopm from '../../Components/LocationCardCopm';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import useMyLocationScreen from './useMyLocationScreen';
 
-const MyLocationScreen = () => {
+const MyLocationScreen = ({ navigation }) => {
+  const { locationList } = useMyLocationScreen();
+
   const renderItem = useCallback(
     (item, index) => {
       return <LocationCardCopm />;
@@ -31,7 +34,11 @@ const MyLocationScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <HeaderComponent headerTitle={'MY LOCATIONS'} rightIconImg={addIcon} />
+      <HeaderComponent
+        headerTitle={'MY LOCATIONS'}
+        rightIconImg={addIcon}
+        onRightPress={() => navigation.navigate('AddLocationScreen')}
+      />
       <SwipeListView
         showsVerticalScrollIndicator={false}
         style={styles.upComingFlatlistView}
