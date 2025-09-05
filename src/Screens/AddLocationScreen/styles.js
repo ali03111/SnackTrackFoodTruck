@@ -6,8 +6,10 @@ export const styles = StyleSheet.create({
   scrollView: { flexGrow: 1, paddingBottom: hp('20'), marginTop: hp('1') },
   inputStyle: {
     // backgroundColor: 'red',
-    height: hp('5'),
+    // height: hp('5'),
     fontSize: hp('1.5'),
+    color: 'black',
+    flex: 1,
     // paddingTop: hp('1.5'),
   },
   textTouchBtn: {
@@ -51,7 +53,7 @@ export const styles = StyleSheet.create({
     marginBottom: hp('1'),
   },
   compTitle: {
-    fontSize: hp('1.2'),
+    fontSize: hp('1.5'),
     marginVertical: hp('1'),
   },
   innerView: {
@@ -61,7 +63,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: Colors.dkBorderColor,
     backgroundColor: Colors.lightInnerColor,
-    height: hp('4'),
+    height: hp('5'),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

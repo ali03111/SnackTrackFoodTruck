@@ -148,6 +148,7 @@ const AddMenuScreen = ({ navigation }) => {
                       width: wp('4'),
                       height: hp('2'),
                       marginRight: wp('2'),
+                      marginTop: Platform.OS == 'android' ? hp('1') : 0,
                     }}
                   />
                   <TextInput
@@ -155,7 +156,8 @@ const AddMenuScreen = ({ navigation }) => {
                       overflow: 'scroll',
                       color: 'black',
                       fontSize: hp('1.5'),
-                      paddingVertical: hp('0'),
+                      paddingVertical: 0,
+                      // backgroundColor: 'red',
                     }}
                     placeholder="Enter item desription"
                     maxLength={50}
@@ -192,6 +194,7 @@ const AddMenuScreen = ({ navigation }) => {
                     placeholderTextColor={'gray'}
                     value={value}
                     onChangeText={onChange}
+                    keyboardType="decimal-pad"
                   />
                 </View>
               )}
@@ -254,6 +257,7 @@ const AddMenuScreen = ({ navigation }) => {
                         style={{
                           ...styles.uploadImg,
                           borderRadius: 10,
+                          width: value?.uri ? wp('90') : wp('30'),
                         }}
                       />
                     </Touchable>

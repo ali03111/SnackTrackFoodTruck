@@ -94,7 +94,7 @@ export const styles = StyleSheet.create({
   inputStyle: {
     flex: 1,
     color: 'black',
-    fontSize: hp('1.2'),
+    fontSize: hp('1.5'),
   },
 
   textTouchBtn: {
@@ -125,7 +125,7 @@ export const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: Colors.dkBorderColor,
     backgroundColor: 'white',
-    height: hp('4'),
+    height: hp('6'),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

@@ -26,6 +26,12 @@ function MainNavigator() {
           headerShown: false,
         }}
       >
+        {!onboarding && (
+          <Stack.Screen
+            name="OnBoardScreen"
+            component={Screens.OnBoardScreen}
+          />
+        )}
         {!isLogin && (
           <>
             <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
@@ -35,12 +41,7 @@ function MainNavigator() {
             />
           </>
         )}
-        {/* {!onboarding && (
-          <Stack.Screen
-            name="OnBoardScreen"
-            component={Screens.OnBoardScreen}
-          />
-        )} */}
+
         {isLogin && (
           <>
             <Stack.Screen name="MybottomTabs" component={MybottomTabs} />

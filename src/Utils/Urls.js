@@ -40,10 +40,10 @@ export const loginUrl = '/login';
 export const updateProfileUrl = 'truck/update-profile';
 export const VerifyUserUrl = '/update-profile';
 
-export const createLocationUrl = '/truck/location/create';
+export const createLocationUrl = 'truck/location/create';
 export const getLocationUrl = '/truck/location/list';
 
-export const createMenuUrl = '/truck/menu/create';
+export const createMenuUrl = 'truck/menu/create';
 export const getMenuUrl = '/truck/menu/list';
 export const deleteMenuUrl = '/truck/menu/delete';
 

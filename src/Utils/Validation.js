@@ -151,42 +151,29 @@ const addLocationSchema = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        day: yup.string().required('Day is required'),
-        startTime: yup
-          .object({
-            time24: yup.string(),
-            time12: yup.string(),
-          })
-          .test(
-            'Start time is required',
-            'Start time is required',
-            val => val.time24 !== '--:--' || !this.parent.isSelected,
-          ),
-        endTime: yup
-          .object({
-            time24: yup.string(),
-            time12: yup.string(),
-          })
-          .test(
-            'End time is required',
-            'End time is required',
-            val => val.time24 !== '--:--' || !this.parent.isSelected,
-          ),
-        isSelected: yup.boolean().required(),
+        day: yup.string().required(),
+        startTime: yup.object({
+          time24: yup.string(),
+          time12: yup.string(),
+        }),
+        endTime: yup.object({
+          time24: yup.string(),
+          time12: yup.string(),
+        }),
+        isSelected: yup.boolean(),
       }),
     )
     .test(
       'at-least-one-selected',
-      'At least one day must be selected with valid times',
-      function (value) {
-        if (!value || value.length === 0) return true; // Allow empty array initially
-        const selectedDays = value.filter(day => day.isSelected);
+      'At least one day with valid times is required',
+      function (days) {
+        if (!days) return false;
+        const selected = days.filter(d => d.isSelected);
         return (
-          selectedDays.length === 0 ||
-          selectedDays.some(
-            day =>
-              day.startTime.time24 !== '--:--' &&
-              day.endTime.time24 !== '--:--',
+          selected.length > 0 &&
+          selected.every(
+            d =>
+              d.startTime?.time24 !== '--:--' && d.endTime?.time24 !== '--:--',
           )
         );
       },

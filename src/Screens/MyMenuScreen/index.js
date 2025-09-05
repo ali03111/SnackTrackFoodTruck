@@ -9,6 +9,7 @@ import { Colors } from '../../Theme/Variables';
 import { styles } from './styles';
 import MyMenuComp from '../../Components/MyMenuComp';
 import useMyMenuScreen from './useMyMenuScreen';
+import { DataNotFound } from '../../Components/DataNotFound';
 
 const MyMenuScreen = ({ navigation }) => {
   const { menuList } = useMyMenuScreen(navigation);
@@ -28,6 +29,7 @@ const MyMenuScreen = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={{ padding: wp(4) }}
+        ListEmptyComponent={<DataNotFound />}
       />
     </View>
   );

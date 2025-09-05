@@ -43,6 +43,7 @@ const useAddMenuScreen = ({ goBack }) => {
       return formDataFunc(createMenuUrl, data, 'image');
     },
     onSuccess: ({ ok, data }) => {
+      console.log('sjkdbklsdblkvbsdklbvklsdbkvsd', data);
       if (ok) {
         successMessage('Post Created.');
         goBack();

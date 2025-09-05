@@ -235,31 +235,57 @@ const fetchGetWithToken = async (url, isUpdate) => {
   // store.dispatch({type: types.LogoutType});
 };
 
-const formDataFunc = async (url, body, imageKey, isArray) => {
-  console.log('jkdvjksdvkjsvdbklvbsdlkbvlksdbvlksdbklvbsdlk');
+const formDataFunc = async (url, body, imageKey, isArray, inewArryKey) => {
   const { Auth } = store.getState();
   store.dispatch(loadingTrue());
-  var myHeaders = new Headers();
+
+  // Helper function to convert image to PNG
+  // const convertToPNG = async imageUri => {
+  //   try {
+  //     // Extract file extension
+  //     const fileExt = imageUri.split('.').pop().toLowerCase();
+
+  //     // If already PNG, return original
+  //     if (fileExt === 'png') return imageUri;
+
+  //     // Generate new filename with .png extension
+  //     const newPath = `${RNFS.TemporaryDirectoryPath}/${Date.now()}.png`;
+
+  //     // Read the original file
+  //     const base64Data = await RNFS.readFile(imageUri, 'base64');
+
+  //     // Write as PNG (this is a simplified approach)
+  //     await RNFS.writeFile(newPath, base64Data, 'base64');
+
+  //     return newPath;
+  //   } catch (error) {
+  //     console.error('Image conversion error:', error);
+  //     return imageUri; // Fallback to original if conversion fails
+  //   }
+  // };
+
+  const myHeaders = new Headers();
   myHeaders.append('Accept', 'application/json');
   myHeaders.append('Authorization', `Bearer ${Auth.token}`);
-  myHeaders.append('Content-Type', 'multipart/form-data');
   myHeaders.append('X-Device-ID', Auth.deviceId);
   myHeaders.append('device_id', Auth.deviceId);
 
   const formData = new FormData();
 
   // Handle image conversion and form data preparation
-  if (isArray) {
+  if (isArray && body[imageKey]?.length > 0) {
     for (const [index, value] of body[imageKey].entries()) {
       if (value?.uri) {
+        // const pngUri = await convertToPNG(value.uri);
         formData.append(`${imageKey}[${index}]`, {
-          uri: value?.uri,
+          uri: value.uri,
           type: 'image/png', // Force PNG type
           name: value.name || `image_${index}.png`,
         });
       }
     }
   } else if (body[imageKey]?.uri) {
+    // const pngUri = await convertToPNG(body[imageKey].uri);
     formData.append(imageKey, {
       uri: body[imageKey].uri,
       type: 'image/png', // Force PNG type
@@ -297,6 +323,69 @@ const formDataFunc = async (url, body, imageKey, isArray) => {
     return { data: error, ok: false };
   }
 };
+
+// const formDataFunc = async (url, body, imageKey, isArray) => {
+//   console.log('jkdvjksdvkjsvdbklvbsdlkbvlksdbvlksdbklvbsdlk');
+//   const { Auth } = store.getState();
+//   store.dispatch(loadingTrue());
+//   var myHeaders = new Headers();
+//   myHeaders.append('Accept', 'application/json');
+//   myHeaders.append('Authorization', `Bearer ${Auth.token}`);
+//   myHeaders.append('Content-Type', 'multipart/form-data');
+//   myHeaders.append('X-Device-ID', Auth.deviceId);
+//   myHeaders.append('device_id', Auth.deviceId);
+
+//   const formData = new FormData();
+
+//   // Handle image conversion and form data preparation
+//   if (isArray) {
+//     for (const [index, value] of body[imageKey].entries()) {
+//       if (value?.uri) {
+//         formData.append(`${imageKey}[${index}]`, {
+//           uri: value?.uri,
+//           type: 'image/png', // Force PNG type
+//           name: value.name || `image_${index}.png`,
+//         });
+//       }
+//     }
+//   } else if (body[imageKey]?.uri) {
+//     formData.append(imageKey, {
+//       uri: body[imageKey].uri,
+//       type: 'image/png', // Force PNG type
+//       name: body[imageKey].name || 'image.png',
+//     });
+//   }
+
+//   // Add other fields
+//   Object.entries(body).forEach(([key, value]) => {
+//     if (key !== imageKey) {
+//       if (Array.isArray(value)) {
+//         value.forEach((item, index) => {
+//           formData.append(`${key}[${index}]`, item);
+//         });
+//       } else {
+//         formData.append(key, value);
+//       }
+//     }
+//   });
+//   console.log('lksdnvklsdnklvndsklvskdlvnkldvs', JSON.stringify(formData));
+//   const requestOptions = {
+//     method: 'POST',
+//     headers: myHeaders,
+//     body: formData,
+//   };
+
+//   try {
+//     const response = await fetch(baseURL + url, requestOptions);
+//     const data = await response.json();
+//     store.dispatch(loadingFalse());
+//     return { data, ok: !data?.errors };
+//   } catch (error) {
+//     console.error('API Error:', error);
+//     store.dispatch(loadingFalse());
+//     return { data: error, ok: false };
+//   }
+// };
 
 export { formDataFunc, fetchPostWithToken, fetchGetWithToken };
 

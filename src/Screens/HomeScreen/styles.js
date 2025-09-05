@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   ImgBg: {
     width: wp('100'),
     height: hp('30'),
-    marginTop: Platform.OS == 'ios' ? hp('-4') : hp('-2'),
+    marginTop: Platform.OS == 'ios' ? hp('-4') : hp('-3'),
     flexGrow: 1,
   },
   ratingEarningsContainer: {

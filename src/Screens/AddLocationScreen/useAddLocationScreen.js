@@ -1,16 +1,12 @@
+// 📌 useAddLocationScreen.js
 import { useFieldArray } from 'react-hook-form';
 import useFormHook from '../../Hooks/UseFormHooks';
 import { timeDateArry } from '../../Utils/localDB';
-import Schemas from '../../Utils/Validation';
+import Schemas, { addLocationSchema } from '../../Utils/Validation';
 import { useCallback, useState } from 'react';
-import {
-  formatTimeTo24Hour,
-  getCustom12HourTime,
-  getFormattedTime,
-} from '../../Services/GlobalFunctions';
 import { useMutation } from '@tanstack/react-query';
 import { createLocationUrl } from '../../Utils/Urls';
-import API from '../../Utils/helperFunc';
+import API, { formDataFunc } from '../../Utils/helperFunc';
 import { errorMessage, successMessage } from '../../Config/NotificationMessage';
 import useReduxStore from '../../Hooks/UseReduxStore';
 
@@ -37,35 +33,18 @@ const useAddLocationScreen = ({ goBack }) => {
 
   const {
     control,
-    register,
     handleSubmit: formHandleSubmit,
-    clearErrors,
     reset,
-    getFieldState,
-    getValues,
-    resetField,
-    setError,
-    setFocus,
     setValue,
-    trigger,
-    unregister,
-    watch,
+    getValues,
     errors,
-  } = useFormHook(Schemas.addLocation, {
-    operationDays: initialOperationDays,
-  });
+  } = useFormHook(Schemas.addLocation, { operationDays: initialOperationDays });
 
-  const { fields, update } = useFieldArray({
-    control,
-    name: 'operationDays',
-  });
+  const { fields, update } = useFieldArray({ control, name: 'operationDays' });
 
   const toggleDaySelected = index => {
     const current = fields[index];
-    update(index, {
-      ...current,
-      isSelected: !current.isSelected,
-    });
+    update(index, { ...current, isSelected: !current.isSelected });
   };
 
   const afterSelectTime = (index, startTime, endTime) => {
@@ -81,12 +60,9 @@ const useAddLocationScreen = ({ goBack }) => {
   };
 
   const { mutateAsync, isLoading } = useMutation({
-    mutationFn: data => {
-      console.log('Sending data to API:', data); // Debug log
-      return API.post(createLocationUrl, data);
-    },
+    mutationFn: data => formDataFunc(createLocationUrl, data),
     onSuccess: ({ ok, data }) => {
-      console.log('API response:', { ok, data }); // Debug log
+      console.log('skldvnklsdnvklndsklvnlkdsvkdsvkdslvkds', data);
       if (ok) {
         successMessage('Post Created.');
         goBack();
@@ -95,45 +71,40 @@ const useAddLocationScreen = ({ goBack }) => {
         errorMessage(data?.message || 'Failed to create location.');
       }
     },
-    onError: error => {
-      console.log('API error:', error); // Debug log
-      errorMessage('Problem occurred while uploading data.');
-    },
+    onError: () => errorMessage('Problem occurred while uploading data.'),
   });
 
-  const onSubmit = useCallback(formData => {
-    console.log('onSubmit triggered with formData:', formData); // Debug log
-    const operationDays = fields
-      .filter(day => day.isSelected)
-      .map(day => ({
-        day: day.day,
-        startTime: day.startTime,
-        endTime: day.endTime,
-      }));
+  const onSubmit = useCallback(
+    formData => {
+      const operationDays = fields
+        .filter(day => day.isSelected)
+        .map(day => ({
+          day: day.day,
+          start_time: day.startTime?.time24,
+          end_time: day.endTime?.time24,
+        }));
 
-    const finalFormData = {
-      ...formData,
-      operationDays,
-    };
+      const finalFormData = { ...formData, operationDays };
+      console.log('slkdbvklsdbvkldsbkvbsdkbvkbsdl', {
+        latitude: finalFormData?.truckLocation?.coords?.latitude ?? '12.24',
+        longitude: finalFormData?.truckLocation?.coords?.longitude ?? '56.78',
+        parking: Boolean(finalFormData?.parkingAvailable === 1),
+        seating: Boolean(finalFormData?.seatAvailable === 1),
+        notes: finalFormData?.specialNotes,
+        timings: operationDays,
+      });
+      mutateAsync({
+        latitude: formData?.truckLocation?.coords?.latitude ?? '12.24',
+        longitude: formData?.truckLocation?.coords?.longitude ?? '56.78',
+        parking: Boolean(formData?.parkingAvailable === 1),
+        seating: Boolean(formData?.seatAvailable === 1),
+        notes: formData?.specialNotes,
+        '[timings]': operationDays,
+      });
+    },
+    [fields],
+  );
 
-    console.log('Final form data:', finalFormData); // Debug log
-    mutateAsync({
-      latitude: finalFormData?.truckLocation?.coords?.latitude ?? '5575',
-      longitude: finalFormData?.truckLocation?.coords?.longitude ?? '527',
-      parking: Boolean(finalFormData?.parkingAvailable === 1),
-      seating: Boolean(finalFormData?.seatAvailable === 1),
-      notes: finalFormData?.specialNotes,
-      timings: {
-        truckName: finalFormData.truckName,
-        operationDays: finalFormData.operationDays,
-      },
-    });
-  }, []);
-  const toggleTimePicker = index => {
-    setTimePickerState(index);
-  };
-
-  console.log('Returning handleSubmit:', formHandleSubmit(onSubmit)); // Debug log
   return {
     control,
     errors,
@@ -144,7 +115,7 @@ const useAddLocationScreen = ({ goBack }) => {
     timeDateArry,
     fields,
     toggleDaySelected,
-    toggleTimePicker,
+    toggleTimePicker: setTimePickerState,
     timePickerState,
     afterSelectTime,
     isLoading,
