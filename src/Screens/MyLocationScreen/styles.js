@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     marginTop: hp('1'),
   },
   backRightBtn: {
-    height: Platform.OS == 'ios' ? hp('54') : hp('53'),
+    // height: Platform.OS == 'ios' ? hp('54') : hp('53'),
     // height: hp('54.6'),
     borderRadius: 10,
     // textAlign: 'left',
@@ -34,7 +34,8 @@ export const styles = StyleSheet.create({
     // height: Platform.OS == 'ios' ? hp('10') : hp('10'),
     borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
-    paddingTop: hp('22'),
+    alignItems: 'flex-start',
+    paddingVertical: hp('13'),
     paddingLeft: wp('35'),
   },
   backRightBtnRight: {
@@ -44,7 +45,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
     alignItems: 'flex-end',
-    paddingTop: hp('22'),
+    paddingVertical: hp('13'),
     paddingRight: wp('35'),
   },
   trashIcon: {

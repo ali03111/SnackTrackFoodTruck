@@ -7,9 +7,9 @@ const useMyLocationScreen = () => {
     queryKey: ['myLocationsList'],
     queryFn: () => API.get(getLocationUrl),
   });
-
+  console.log('data from location list', data?.data);
   return {
-    locationList: data?.data?.data,
+    locationList: data?.data?.locations,
   };
 };
 

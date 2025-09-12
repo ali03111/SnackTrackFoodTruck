@@ -17,6 +17,7 @@ import API from '../Utils/helperFunc';
 import { useMutation } from '@tanstack/react-query';
 import { errorMessage, successMessage } from '../Config/NotificationMessage';
 import useReduxStore from '../Hooks/UseReduxStore';
+import NavigationService from '../Services/NavigationService';
 
 const MyMenuComp = ({ item }) => {
   const { queryClient } = useReduxStore();
@@ -76,7 +77,12 @@ const MyMenuComp = ({ item }) => {
           <Image source={threeDotsIcon} style={styles.menuIcon} />
         </MenuTrigger>
         <MenuOptions>
-          <MenuOption text="Edit" />
+          <MenuOption
+            text="Edit"
+            onSelect={() => {
+              NavigationService.navigate('AddMenuScreen', { id: item?.id });
+            }}
+          />
           <MenuOption
             text="Delete"
             onSelect={async () => {

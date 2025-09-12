@@ -12,8 +12,8 @@ const MyLocationScreen = ({ navigation }) => {
   const { locationList } = useMyLocationScreen();
 
   const renderItem = useCallback(
-    (item, index) => {
-      return <LocationCardCopm />;
+    ({ item, index }) => {
+      return <LocationCardCopm item={item} />;
     },
     [8],
   );
@@ -44,7 +44,7 @@ const MyLocationScreen = ({ navigation }) => {
         style={styles.upComingFlatlistView}
         useFlatList
         // data={[1, 23, 4]}
-        data={[1, 2, 3, 4, 5, 6]}
+        data={locationList}
         // sections={bottomData}
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}

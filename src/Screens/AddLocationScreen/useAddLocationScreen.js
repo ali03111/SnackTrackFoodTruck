@@ -24,6 +24,16 @@ const useAddLocationScreen = ({ goBack }) => {
     'Sunday',
   ];
 
+  const shortDay = {
+    Monday: 'mon',
+    Tuesday: 'tue',
+    Wednesday: 'wed',
+    Thursday: 'thu',
+    Friday: 'fri',
+    Saturday: 'sat',
+    Sunday: 'sun',
+  };
+
   const initialOperationDays = daysOfWeek.map(day => ({
     day,
     startTime: { time24: '--:--', time12: '--:--' },
@@ -60,7 +70,7 @@ const useAddLocationScreen = ({ goBack }) => {
   };
 
   const { mutateAsync, isLoading } = useMutation({
-    mutationFn: data => formDataFunc(createLocationUrl, data),
+    mutationFn: data => API.post(createLocationUrl, data),
     onSuccess: ({ ok, data }) => {
       console.log('skldvnklsdnvklndsklvnlkdsvkdsvkdslvkds', data);
       if (ok) {
@@ -79,7 +89,7 @@ const useAddLocationScreen = ({ goBack }) => {
       const operationDays = fields
         .filter(day => day.isSelected)
         .map(day => ({
-          day: day.day,
+          day: shortDay[day.day],
           start_time: day.startTime?.time24,
           end_time: day.endTime?.time24,
         }));
@@ -99,7 +109,7 @@ const useAddLocationScreen = ({ goBack }) => {
         parking: Boolean(formData?.parkingAvailable === 1),
         seating: Boolean(formData?.seatAvailable === 1),
         notes: formData?.specialNotes,
-        '[timings]': operationDays,
+        timings: operationDays,
       });
     },
     [fields],

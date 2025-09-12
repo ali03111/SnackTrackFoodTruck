@@ -15,7 +15,7 @@ import { Colors } from '../Theme/Variables';
 import { MultiSelectBtn } from './MultiSelectBtn';
 import { MultiView } from './MultiView';
 
-const LocationCardComp = () => {
+const LocationCardComp = ({ item }) => {
   const bottomArry = [
     {
       title: `Operating Hours:`,
@@ -27,12 +27,24 @@ const LocationCardComp = () => {
     {
       title: `Parking availability:`,
       leftIcon: carPark,
-      rightChilderView: <TextComponent text={'Yes'} fade size={'1.5'} />,
+      rightChilderView: (
+        <TextComponent
+          text={Boolean(item?.parking == 1).toString()}
+          fade
+          size={'1.5'}
+        />
+      ),
     },
     {
       title: `Seating options:`,
       leftIcon: seatAvilabe,
-      rightChilderView: <TextComponent text={'Yes'} fade size={'1.5'} />,
+      rightChilderView: (
+        <TextComponent
+          text={Boolean(item?.seating == 1).toString()}
+          fade
+          size={'1.5'}
+        />
+      ),
     },
     {
       title: `Special notes:`,
@@ -89,9 +101,7 @@ const LocationCardComp = () => {
           titleStyles={styles.multiViewTitle}
         />
         <TextComponent
-          text={
-            'The application will allow food trucks to  profiles, locations, menus, and payments, while customers can search for nearby trucks, place orders, rate food trucks.'
-          }
+          text={item?.notes}
           size={'1.5'}
           fade
           styles={styles.descriptionText}
