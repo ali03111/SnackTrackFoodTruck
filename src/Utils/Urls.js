@@ -4,7 +4,7 @@ const getCredentials = () => {
       baseURL:
         'https://virtualrealitycreators.com/snack-track-backend/public/api/v1/',
       imageURL:
-        'https://virtualrealitycreators.com/snack-track-backend/public/storage/public/',
+        'https://virtualrealitycreators.com/snack-track-backend/public/storage/',
     };
   else {
     console.log = () => {};
@@ -12,7 +12,7 @@ const getCredentials = () => {
       baseURL:
         'https://virtualrealitycreators.com/snack-track-backend/public/api/v1/',
       imageURL:
-        'https://virtualrealitycreators.com/snack-track-backend/public/storage/public/',
+        'https://virtualrealitycreators.com/snack-track-backend/public/storage/',
     };
   }
 };

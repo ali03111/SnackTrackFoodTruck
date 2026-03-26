@@ -5,6 +5,7 @@ import { Colors } from '../Theme/Variables';
 import { arrowRight, locationWithMobile } from '../Assets';
 import { TextComponent } from './TextComponent';
 import ThemeButton from './ThemeButton';
+import NavigationService from '../Services/NavigationService';
 
 const AddLocationComp = () => {
   return (
@@ -26,6 +27,7 @@ const AddLocationComp = () => {
         btnStyle={styles.button}
         textStyle={styles.buttonText}
         image={arrowRight}
+        onPress={() => NavigationService.navigate('AddLocationScreen')}
       />
     </View>
   );

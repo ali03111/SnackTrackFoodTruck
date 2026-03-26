@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Colors } from '../Theme/Variables';
 import { hp, wp } from '../Hooks/useResponsive';
 import ThemeButtonWithIcon from './ThemeButtonWithIcon';
+import { getDayInitial } from '../Services/GlobalFunctions';
 
 export const MultiSelectBtn = ({
   items,
@@ -28,7 +29,7 @@ export const MultiSelectBtn = ({
         onSelectVal(objId, item);
         // setDummy(pre => pre + 1);
       }}
-      title={item?.name ?? item?.title ?? item}
+      title={item?.name ?? item?.title ?? getDayInitial(item?.day) ?? item}
       style={{
         ...styles.btnMain(
           isMultipule

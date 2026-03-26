@@ -45,7 +45,7 @@ const useAddMenuScreen = ({ goBack }) => {
     onSuccess: ({ ok, data }) => {
       console.log('sjkdbklsdblkvbsdklbvklsdbkvsd', data);
       if (ok) {
-        successMessage('Post Created.');
+        successMessage(data?.message);
         goBack();
         queryClient.invalidateQueries(['myMenuList']);
       } else {

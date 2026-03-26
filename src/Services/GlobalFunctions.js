@@ -1083,6 +1083,13 @@ const formatTimeBothFormats = dateInput => {
   };
 };
 
+function getDayInitial(day) {
+  //console.log(getDayInitial('mon'));    // "M"
+
+  if (!day || typeof day !== 'string') return '';
+  return day.trim().charAt(0).toUpperCase();
+}
+
 export {
   getSingleCharacter,
   getProperLocation,
@@ -1139,4 +1146,5 @@ export {
   convertTo24HourFormat,
   formatTimeTo24Hour,
   formatTimeBothFormats,
+  getDayInitial,
 };

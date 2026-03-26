@@ -6,7 +6,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { hp, wp } from '../Hooks/useResponsive';
 import { carPark, description, locationRed, seatAvilabe } from '../Assets';
 import { TextComponent } from './TextComponent';
@@ -14,14 +14,27 @@ import DividerLine from './DividerLine';
 import { Colors } from '../Theme/Variables';
 import { MultiSelectBtn } from './MultiSelectBtn';
 import { MultiView } from './MultiView';
+import {
+  convertDateFormat,
+  convertToCustomTimeFormat,
+  formatDateToCustomFormat,
+} from '../Services/GlobalFunctions';
 
 const LocationCardComp = ({ item }) => {
+  const [selectedDay, setSelectedDay] = useState(item?.timings[0]);
+
   const bottomArry = [
     {
       title: `Operating Hours:`,
       leftIcon: locationRed,
       rightChilderView: (
-        <TextComponent text={'9:00 AM - 2:00 PM'} fade size={'1.5'} />
+        <TextComponent
+          text={`${convertToCustomTimeFormat(selectedDay?.start_time)} - ${
+            selectedDay?.end_time
+          }`}
+          fade
+          size={'1.5'}
+        />
       ),
     },
     {
@@ -87,8 +100,10 @@ const LocationCardComp = ({ item }) => {
       <TextComponent text={'Operating Days'} fade size={'1.5'} />
       <View style={styles.daysRow}>
         <MultiSelectBtn
-          items={['M', 'T', 'W', 'T', 'F', 'S', 'S']}
+          items={item?.timings}
           btnStyle={styles.dayButton}
+          selectedAlter={selectedDay}
+          onSelectVal={(_, e) => setSelectedDay(e)}
         />
       </View>
 

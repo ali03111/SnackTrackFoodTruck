@@ -49,9 +49,11 @@ const MyMenuComp = ({ item }) => {
       ? ` +${item.dietary_information.length - 2}`
       : '';
 
+  console.log('sjkdbklsdbklvbklsdbvksbdklvbklsdbvkbsdklvbklds', item?.image);
+
   return (
     <View style={styles.card}>
-      <BlurImage source={imageUrl(item.image)} styles={styles.foodImage} />
+      <BlurImage uri={imageUrl(item.image)} styles={styles.foodImage} isURI />
 
       <View style={styles.content}>
         <TextComponent text={item.name} family="bold" />
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
     width: wp(20),
     height: hp(10),
     borderRadius: 8,
-    resizeMode: 'cover',
   },
   content: {
     flex: 1,

@@ -131,7 +131,7 @@ const HomeScreen = () => {
           <TextComponent text={'View all'} size={'1.7'} />
         </View>
         <View style={styles.multiViewStyle}>
-          <MultiSelectBtn items={centerView} />
+          <MultiSelectBtn items={centerView} isDisable />
         </View>
         <View>
           <FlatList

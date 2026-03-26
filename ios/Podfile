@@ -56,7 +56,7 @@ use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
  
-    :hermes_enabled => false,
+    :hermes_enabled => true,
     # :flipper_configuration => flipper_config,
  
     :app_path => "#{Pod::Config.instance.installation_root}/.."

@@ -16,8 +16,11 @@ import {
   termYellow,
 } from '../../Assets';
 import NavigationService from '../../Services/NavigationService';
+import { logOutAuth } from '../../Redux/Action/AuthAction';
+import useSettingScreen from './useSettingScreen';
 
 const SettingScreen = () => {
+  const { dispatch } = useSettingScreen();
   const Account = {
     title: 'Account',
     arryView: [
@@ -72,6 +75,14 @@ const SettingScreen = () => {
         title: 'About',
         leftIcon: aboutYellow,
         subView: 'Learn more about the app',
+      },
+      {
+        title: 'LogOut',
+        leftIcon: aboutYellow,
+        onPress: () => {
+          dispatch(logOutAuth());
+        },
+        // subView: 'Learn more about the app',
       },
     ],
   };

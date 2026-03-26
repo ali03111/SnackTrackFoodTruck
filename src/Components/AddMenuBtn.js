@@ -1,13 +1,17 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { hp, wp } from '../Hooks/useResponsive';
 import { TextComponent } from './TextComponent';
 import { arrRight } from '../Assets';
 import { Colors } from '../Theme/Variables';
+import NavigationService from '../Services/NavigationService';
 
 const AddMenuBtn = () => {
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => NavigationService.navigate('AddMenuScreen')}
+    >
       <TextComponent text="ADD MENU" styles={styles.titleText} />
       <View style={styles.descriptionContainer}>
         <TextComponent
@@ -24,7 +28,7 @@ const AddMenuBtn = () => {
           style={styles.arrowIcon}
         />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
